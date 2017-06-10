@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,8 +8,8 @@ char *strconcat(char *s1, char *s2)
   int i;
   int j;
 
-  s3 = malloc(sizeof(s1) + sizeof(s2));
-	    
+  s3 = malloc(strlen(s1) + strlen(s2));
+
   /* if malloc fails, return NULL */
   if (s3 == NULL)
     return NULL;
