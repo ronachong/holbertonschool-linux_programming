@@ -6,5 +6,6 @@ int main(void)
 {
   printf("%s", apples("filler string"));
   printf("%s", bananas("filler string"));
+  printf("%s", oranges("filler string"));
   return (0);
 }
