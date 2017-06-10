@@ -8,5 +8,6 @@ int main(void)
   printf("%s", bananas("filler string"));
   printf("%s", oranges("filler string"));
   printf("%s", pineapples("filler string"));
+  printf("%s", kiwis("filler string"));
   return (0);
 }
