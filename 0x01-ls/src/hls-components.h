@@ -28,7 +28,7 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
-int ls(char *dpath);
+int hls(char *dpath);
 char **get_fpaths(DIR *dstrm, char *opxns);
 fname_t **get_fnames(char **fpaths, char *opxns);
 int print_fnames(fname_t **fnames, char *opxns);

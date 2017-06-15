@@ -2,7 +2,7 @@
 #include "ls-components.h"
 
 /* probably need to check return of open, read, and/or close? */
-int ls(char *dpath)
+int hls(char *dpath)
 {
 	DIR *dir;
 	struct dirent *ent;
