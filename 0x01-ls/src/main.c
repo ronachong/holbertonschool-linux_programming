@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "ls-components.h"
+#include "hls-components.h"
 
 /**
  * main - executes hls with file arguments from command line
