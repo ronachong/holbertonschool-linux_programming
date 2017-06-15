@@ -1,6 +1,7 @@
 #ifndef HEADER_FILE
 #define HEADER_FILE
 #include <dirent.h>
+#include <sys/types.h>
 
 typedef struct fname_s
 {
