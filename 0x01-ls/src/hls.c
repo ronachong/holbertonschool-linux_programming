@@ -14,10 +14,9 @@
 int hls(char *dpath)
 {
 	DIR *dstrm;
-	struct dirent *ent;
 
 	printf("Inside ls: dpath is %s\n", dpath);
-	dir = opendir(dpath);
+	dstrm = opendir(dpath);
 	printf("Opened stream to dpath; ptr is %p\n", (void *) dstrm);
 
 	get_fpaths(dstrm, opxns);
