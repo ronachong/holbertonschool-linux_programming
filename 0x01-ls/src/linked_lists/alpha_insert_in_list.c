@@ -14,21 +14,14 @@ int alpha_insert_in_list(List **list, char *content)
 	i = 0;
 	ptr_to_node = *list;
 
-	printf("\nalpha_insert_in_list: inserting %s\n", content);
-
 	if (ptr_to_node == NULL)
 		return (add_node(list, content));
-
-	printf("cmpstr(content, ptr_to_node->str) is %i\n",
-		cmpstr(content, ptr_to_node->str));
-
 
 	while (ptr_to_node != NULL && cmpstr(content, ptr_to_node->str) > 0)
 	{
 		ptr_to_node=ptr_to_node->next;
 		i++;
 	}
-	printf("i is %i\n", i);
 	return (insert_in_list(list, content, i));
 }
 

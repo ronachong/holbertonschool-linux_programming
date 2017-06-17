@@ -13,8 +13,6 @@ int insert_in_list(List **list, char *content, int index) {
   List *ptr_to_node_prior;
   List *next_to_assign;
 
-  printf("insert_in_list: inserting %s\n", content);
-
   /* handle index parameter less than 0 */
   if (index < 0) {
     return 0;
@@ -29,12 +27,6 @@ int insert_in_list(List **list, char *content, int index) {
   /* ELSE */
   /* find the node prior to node we want to insert */
   ptr_to_node_prior = find_node_prior(*list, index);
-
-  if (ptr_to_node_prior == NULL)
-	  printf("index to insert at is %i, and node prior is NULL\n", index);
-  else
-	  printf("index to insert at is %i, and str of node prior is %s\n",
-	 index, ptr_to_node_prior->str);
 
   /* if index req'd greater than size of list */
   if (ptr_to_node_prior == NULL) {
@@ -63,7 +55,7 @@ List *find_node_prior(List *ptr_to_head, int index) {
 	  ptr = ptr->next;
 	  i++;
   }
-
+ 
   if (i != index - 1)
 	  ptr = ptr->next;
 
