@@ -14,5 +14,7 @@ List *params_to_list(int ac, char **av);
 int print_char(char c);
 void print_list(List *list);
 void rev_list(List **list);
+int alpha_insert_in_list(List **list, char *content);
+int cmpstr(char *s1, const char *s2);
 
 #endif

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "list.h"
 
 int print_char(char);
@@ -20,15 +21,20 @@ void print_list(List *list) {
 
   /* print string, followed by comma and space, for every node but last */
   while (ptr_to_node->next != NULL) {
-    print_string(ptr_to_node->str);
-    print_char(',');
-    print_char(' ');
-    ptr_to_node = ptr_to_node->next;
+	  /* print_string("(str: "); */
+	  /* print_string(ptr_to_node->str); */
+	  /* print_string(", next: "); */
+	  /* printf("%p)", (void *) ptr_to_node->next); */
+	  printf("(str: %s, next: %p) ", ptr_to_node->str, (void *) ptr_to_node->next);
+	  ptr_to_node = ptr_to_node->next;
   }
 
   /* print string in last node, followed by new line */
-  print_string(ptr_to_node->str);
-  print_char('\n');
+  /* print_string("(str: "); */
+  /* print_string(ptr_to_node->str); */
+  /* print_string(")\n"); */
+  printf("(str: %s, next: %p)\n", ptr_to_node->str, (void *) ptr_to_node->next);
+
 }
 
 /* print_string loops thru string input and prints every

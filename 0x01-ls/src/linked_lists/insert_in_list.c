@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "list.h"
 
 int add_node(List **list, char *str);
@@ -11,6 +12,8 @@ struct List *find_end_of_list(struct List **);
 int insert_in_list(List **list, char *content, int index) {
   List *ptr_to_node_prior;
   List *next_to_assign;
+
+  printf("insert_in_list: inserting %s\n", content);
 
   /* handle index parameter less than 0 */
   if (index < 0) {
@@ -26,6 +29,12 @@ int insert_in_list(List **list, char *content, int index) {
   /* ELSE */
   /* find the node prior to node we want to insert */
   ptr_to_node_prior = find_node_prior(*list, index);
+
+  if (ptr_to_node_prior == NULL)
+	  printf("index to insert at is %i, and node prior is NULL\n", index);
+  else
+	  printf("index to insert at is %i, and str of node prior is %s\n",
+	 index, ptr_to_node_prior->str);
 
   /* if index req'd greater than size of list */
   if (ptr_to_node_prior == NULL) {
@@ -44,43 +53,21 @@ int insert_in_list(List **list, char *content, int index) {
 
 List *find_node_prior(List *ptr_to_head, int index) {
   int i;
-  List *current_node_ptr;
+  List *ptr;
 
-  for (i = 0, current_node_ptr = ptr_to_head; i < index && current_node_ptr->next != NULL; i++) {
-    /* if i is one less than the index of node to insert, we've found
-       the node prior; return! */
-    if (i == index - 1) {
-      return current_node_ptr;
-    }
-    
-    /* else */
-    /* update current node to next node */
-    current_node_ptr = current_node_ptr->next;
+  i = 0;
+  ptr = ptr_to_head;
+
+  while (ptr->next != NULL && i < index - 2)
+  {
+	  ptr = ptr->next;
+	  i++;
   }
 
-  /* if loop did not succeed... then probably index req'd
-     is greater than size of list*/
-    return NULL;
-}
+  if (i != index - 1)
+	  ptr = ptr->next;
 
-
-/* find_end_of_list takes the pointer to the head of a list, /list/,                                        
-   and proceeds to the /next/ pointer in each node in the list,                                             
-   until it reaches a NULL pointer.                                                                         
-                                                                                                            
-   It returns the pointer to the current last node in the list.                                             
-*/
-struct List *find_end_of_list(struct List **list) {
-  struct List *ptr_to_node;
-
-  /* initialize ptr to node as ptr to the head of the list */
-  ptr_to_node = *list;
-
-  while (ptr_to_node->next != NULL) {
-    ptr_to_node = ptr_to_node->next;
-  }
-
-  return ptr_to_node;
+  return ptr;
 }
 
 
@@ -101,4 +88,17 @@ int insert_new_node(List *ptr_to_node_prior, char *str, List *next_to_assign) {
   ptr_to_node_prior->next = ptr_to_node;
   
   return 0;
+}
+
+struct List *find_end_of_list(struct List **list) {
+	struct List *ptr_to_node;
+
+	/* initialize ptr to node as ptr to the head of the list */
+	ptr_to_node = *list;
+
+	while (ptr_to_node->next != NULL) {
+		ptr_to_node = ptr_to_node->next;
+	}
+
+	return ptr_to_node;
 }

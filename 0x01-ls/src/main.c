@@ -28,7 +28,8 @@ int main(int argc, char **argv)
 		if (argv[i][0] != '-')
 		       {
 			       fargc++;
-			       if (add_node(&fargs, argv[i]) == 1)
+			       /* if (add_node(&fargs, argv[i]) == 1) */
+			       if (alpha_insert_in_list(&fargs, argv[i]) == 1)
 			       {
 				       printf("Error allocating space\n");
 				       return (2);
@@ -38,6 +39,10 @@ int main(int argc, char **argv)
 	print_list(fargs);
 	printf("fargc is %i\n", fargc);
 
+	alpha_insert_in_list(&fargs, "test content");
+	alpha_insert_in_list(&fargs, "test0");
+	alpha_insert_in_list(&fargs, "test3");
+	print_list(fargs);
 
 	/* if (fargc == 0) */
 	/* 	return hls("N/A"); /\* change to cwd *\/ */
