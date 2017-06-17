@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	}
 
 	if (fargc == 0)
-		return hls("N/A"); /* change to cwd */
+		return hls("N/A"); /* TODO: change to cwd */
 	if (fargc == 1)
 		return hls(fargs->str);
 	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)
@@ -47,6 +47,6 @@ int main(int argc, char **argv)
 		printf("%s:\n", farg->str);
 		hls(farg->str);
 	}
-	/* compute return val */
+	/* TODO: compute return val */
 	return (0);
 }
