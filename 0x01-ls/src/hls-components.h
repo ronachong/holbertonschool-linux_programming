@@ -3,6 +3,31 @@
 #include <dirent.h>
 #include <sys/types.h>
 
+
+/**
+ * struct hls_opxns - representation of parameters for hls call
+ * @ftparams: file types to include in output
+ *     0    don't list hidden files in output
+ *     1    don't list implicit hidden files in output
+ *     2    do list hidden files in output
+ * @finfo: file info to retrieve
+ *     0    name only
+ *     1    name and size
+ *     2    name, size, and other details
+ * @pformat: printing format for output
+ *     0    use new line as separator between file names or info
+ *     1    use space as separator between file names or info
+ * Description: 
+ *
+ */
+struct hls_opxns
+{
+	int ftparams;
+	int finfo;
+	int pformat;
+}
+
+
 typedef struct fname_s
 {
 	char *name;
