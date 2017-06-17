@@ -19,7 +19,7 @@ int hls(char *dpath)
 	dstrm = opendir(dpath);
 	printf("Opened stream to dpath; ptr is %p\n", (void *) dstrm);
 
-	get_fpaths(dstrm, opxns);
+	/* get_fpaths(dstrm, opxns); */
 	
 
 	closedir(dstrm);

@@ -19,10 +19,10 @@ int main(int argc, char **argv)
 	int i;
 	int fargc;
 	List *fargs;
+	List *farg;
 
 	/* create linked list of fargs */
 	fargs = NULL;
-
 	for (fargc = 0, i = 1; i < argc; i++)
 	{
 		if (argv[i][0] != '-')
@@ -36,18 +36,17 @@ int main(int argc, char **argv)
 		       }
 	}
 
-
-	/* if (fargc == 0) */
-	/* 	return hls("N/A"); /\* change to cwd *\/ */
-	/* if (fargc == 1) */
-	/* 	return hls(argv[0]); */
-	/* for (i = 1; i < fargc; i++) */
-	/* { */
-	/* 	if (i > 1) */
-	/* 		putchar('\n'); */
-	/* 	printf("%s:\n", argv[i]); */
-	/* 	hls(argv[i]); */
-	/* } */
-	/* /\* compute return val *\/ */
+	if (fargc == 0)
+		return hls("N/A"); /* change to cwd */
+	if (fargc == 1)
+		return hls(fargs->str);
+	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)
+	{
+		if (i > 0)
+			putchar('\n');
+		printf("%s:\n", farg->str);
+		hls(farg->str);
+	}
+	/* compute return val */
 	return (0);
 }
