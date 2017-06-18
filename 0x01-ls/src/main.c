@@ -7,6 +7,7 @@
  * main - executes hls with file arguments from command line
  * @argc: number of command line arguments
  * @argv: array of string arguments from command line
+ *
  * Return: same as ls returns -
  *     0      if OK,
  *     1      if minor problems (e.g., cannot access subdirectory),
@@ -57,6 +58,7 @@ int main(int argc, char **argv)
  * @fargc_p - pointer to fargc/count of file arguments from cmd line
  * @argc - count of all args from cmd line
  * @argv - string array of args from cmd line
+ *
  * Return:
  *     0      if OK,
  *     1      if minor problems (e.g., cannot access subdirectory),
@@ -94,6 +96,7 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
  * intialize_opxns - create struct representing params for hls call(s); set
  * values to default
  * @opxns: pointer to hls_options_t pointer set to NULL
+ *
  * Return: 0 for success, 1 for invalid opxns, 2 for malloc error
  */
 int initialize_opxns(hls_opxns_t **opxns_dp)
@@ -116,6 +119,7 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
  * get_opxns - parses arg for parameters for hls call(s)
  * @opxns: pointer to struct representing parameters for hls calls
  * @arg: string to parse for hls options
+ *
  * Return: 0 for success, 1 for error
  */
 int get_opxns(hls_opxns_t *opxns, char *arg)

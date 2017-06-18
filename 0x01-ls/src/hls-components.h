@@ -62,7 +62,7 @@ int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath, hls_opxns_t *opxns);
 int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams);
 fname_t **get_fnames(char **fpaths, char *opxns);
-int print_fnames(fname_t **fnames, char *opxns);
+int print_fnames(List *fnames, int pformat);
 finfo_t **get_finfo(char **fpaths, char *opxns);
 int print_finfo(finfo_t **finfo, char *opxns);
 vfinfo_t **get_vfinfo(char **fpaths, char *opxns);
