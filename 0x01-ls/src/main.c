@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "hls-components.h"
 #include "list.h"
 
@@ -80,13 +81,13 @@ int initialize_opxns(hls_opxns_t **opxns)
 	if (opxns != NULL)
 		return (1);
 
-	*opxns = malloc(sizeof(struct hls_opxns));		
+	*opxns = malloc(sizeof(struct hls_opxns));
 	if (*opxns == NULL)
 		return (2);
-					    
-	*opxns->ftparams = 0;
-	*opxns->finfo = 0;
-	*opxns->pformat = 0;
+
+	(*opxns).ftparams = 0;
+	(*opxns).finfo = 0;
+	(*opxns).pformat = 0;
 
 	return (0);
 }
