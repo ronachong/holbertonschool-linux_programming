@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	{
 		if (argv[i][0] == '-') /* arg is option(s) */
 		{
-			if (get_opxns(&opxns, argv[i]) == 1)
+			if (get_opxns(opxns, argv[i]) == 1)
 				return (1);
 		}
 		else /* arg is file arg */
@@ -100,7 +100,7 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
  * @arg: string to parse for hls options
  * Return: 0 for success, 1 for error
  */
-int get_opxns(hls_opxns_t **opxns, char *arg)
+int get_opxns(hls_opxns_t *opxns, char *arg)
 {
 	int i;
 	

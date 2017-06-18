@@ -54,7 +54,7 @@ typedef struct vfinfo_s
 } vfinfo_t;
 
 int initialize_opxns(hls_opxns_t **opxns_dp);
-int get_opxns(hls_opxns_t **opxns, char *arg);
+int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath);
 char **get_fpaths(DIR *dstrm, char *opxns);
 fname_t **get_fnames(char **fpaths, char *opxns);
