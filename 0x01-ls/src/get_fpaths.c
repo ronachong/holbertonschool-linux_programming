@@ -4,8 +4,12 @@
 
 /**
  * get_fpaths - get the paths of files to be represented by hls
- * @dstrm: 
- * @opxns: 
+ * @dstrm: ptr to stream of directory to be represented by hls
+ * @ftparams: int code specifying whether hls call should represent hidden files
+ *     0    don't list hidden files in output
+ *     1    don't list implicit hidden files in output
+ *     2    do list hidden files in output
+ *
  * Return: 
  */
 char **get_fpaths(DIR *dstrm, int ftparams)
@@ -18,9 +22,9 @@ char **get_fpaths(DIR *dstrm, int ftparams)
 
 	while ((ent = readdir(dstrm)) != NULL)
 		/* if filetype is hidden:
-		   1. continue (skip) if opxns->
-		   2. continue (skip) if '.' and '..' and -A in opxns:
-		   3. execute like normal (add to char string) if -a in options
+		   1. continue (skip) if ftparams is 0
+		   2. continue (skip) if '.' and '..' and ftparams is 1:
+		   3. execute like normal (add to char string) if ftparams is 2
 		*/
 		printf("%s\n", ent->d_name);
 	return fpaths;
