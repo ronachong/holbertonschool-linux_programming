@@ -13,12 +13,14 @@
 int hls(char *dpath, hls_opxns_t *opxns)
 {
 	DIR *dstrm;
+	List *fpaths;
 
 	printf("\nDEBUG Inside ls: dpath is %s\n", dpath);
+	fpaths = NULL;
 	dstrm = opendir(dpath);
 	printf("\nDEBUG Opened stream to dpath; ptr is %p\n", (void *) dstrm);
 
-	get_fpaths(dstrm, opxns->ftparams);
+	get_fpaths(&fpaths, dstrm, opxns->ftparams);
 
 	closedir(dstrm);
 	return (0);
