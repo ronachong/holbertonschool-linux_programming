@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	List *farg;
 
 	/* parse argv for fargs, fargc, and opxns */
-	fargs = NULL;
 	opxns = NULL;
+	fargs = NULL;
 
 	if (initialize_opxns(&opxns) != 0)
 		return (2);
@@ -72,22 +72,24 @@ int main(int argc, char **argv)
 
 
 /**
- * intialize_opxns - creates struct representing default params for hls call(s)
- * @opxns: pointer to hls
+ * intialize_opxns - create struct representing params for hls call(s); set
+ * values to default
+ * @opxns: pointer to hls_options_t pointer set to NULL
  * Return: 0 for success, 1 for invalid opxns, 2 for malloc error
  */
-int initialize_opxns(hls_opxns_t **opxns)
+int initialize_opxns(hls_opxns_t **opxns_dp)
 {
-	if (opxns != NULL)
+	if (*opxns_dp != NULL)
 		return (1);
 
-	*opxns = malloc(sizeof(struct hls_opxns));
-	if (*opxns == NULL)
+	*opxns_dp = malloc(sizeof(struct hls_opxns));
+	if (*opxns_dp == NULL)
 		return (2);
 
-	(*opxns).ftparams = 0;
-	(*opxns).finfo = 0;
-	(*opxns).pformat = 0;
+	printf("opxns_dp is %p\n", (void *) opxns_dp);
+	(*opxns_dp)->ftparams = 0;
+	(*opxns_dp)->finfo = 0;
+	(*opxns_dp)->pformat = 0;
 
 	return (0);
 }

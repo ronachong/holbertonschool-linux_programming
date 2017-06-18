@@ -22,9 +22,9 @@
  */
 typedef struct hls_opxns
 {
-	int *ftparams;
-	int *finfo;
-	int *pformat;
+	int ftparams;
+	int finfo;
+	int pformat;
 } hls_opxns_t;
 
 
@@ -53,7 +53,7 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
-int initialize_opxns(hls_opxns_t **opxns);
+int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t **opxns, char *arg);
 int hls(char *dpath);
 char **get_fpaths(DIR *dstrm, char *opxns);
