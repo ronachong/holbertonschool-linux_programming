@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "hls-components.h"
 
 /* probably need to check return of open, read, and/or close? */

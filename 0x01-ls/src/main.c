@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "hls-components.h"
 
  /* implement default behavior when no farg passed */

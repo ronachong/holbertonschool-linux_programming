@@ -2,6 +2,8 @@
 #define HEADER_FILE
 #include <dirent.h>
 #include <sys/types.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "list.h"
 
 /**
