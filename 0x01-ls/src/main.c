@@ -103,21 +103,21 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
 int get_opxns(hls_opxns_t *opxns, char *arg)
 {
 	int i;
-	
-	for (i = 1; arg[i] !='\0'; i++)
+
+	for (i = 1; arg[i] != '\0'; i++)
 	{
-		if (arg[i] == 'A' && opxns->ftparams != 2):
+		if (arg[i] == 'A' && opxns->ftparams != 2)
 			opxns->ftparams = 1;
-		else if (arg[i] == 2):
+		else if (arg[i] == 2)
 			opxns->ftparams = 2;
-		else if (arg[i] == 'S' && opxns->finfo != 2):
+		else if (arg[i] == 'S' && opxns->finfo != 2)
 			opxns->finfo = 1;
-		else if (arg[i] == 'l'):
+		else if (arg[i] == 'l')
 		{
 			opxns->finfo = 2;
 			opxns->pformat = 1;
 		}
-		else if (arg[i] = '1'):
+		else if (arg[i] == '1')
 			opxns->pformat = 1;
 		else
 		{
