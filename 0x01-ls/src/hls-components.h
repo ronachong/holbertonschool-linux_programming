@@ -59,8 +59,8 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
 	       int argc, char **argv);
 int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
-int hls(char *dpath);
-char **get_fpaths(DIR *dstrm, char *opxns);
+int hls(char *dpath, hls_opxns_t *opxns);
+char **get_fpaths(DIR *dstrm, hls_opxns_t *opxns);
 fname_t **get_fnames(char **fpaths, char *opxns);
 int print_fnames(fname_t **fnames, char *opxns);
 finfo_t **get_finfo(char **fpaths, char *opxns);

@@ -32,15 +32,15 @@ int main(int argc, char **argv)
 	       opxns->ftparams, opxns->finfo, opxns->pformat);
 
 	if (fargc == 0)
-		return hls("N/A"); /* TODO: change to cwd */
+		return hls("N/A", opxns); /* TODO: change to cwd */
 	if (fargc == 1)
-		return hls(fargs->str);
+		return hls(fargs->str, opxns);
 	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)
 	{
 		if (i > 0)
 			putchar('\n');
 		printf("%s:\n", farg->str);
-		hls(farg->str);
+		hls(farg->str, opxns);
 	}
 	/* TODO: compute return val */
 	/* TODO: free fargs */
