@@ -20,12 +20,12 @@
  * Description: 
  *
  */
-struct hls_opxns
+typedef struct hls_opxns
 {
-	int ftparams;
-	int finfo;
-	int pformat;
-}
+	int *ftparams;
+	int *finfo;
+	int *pformat;
+} hls_opxns_t;
 
 
 typedef struct fname_s
@@ -53,6 +53,8 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
+int initialize_opxns(hls_opxns_t opxns);
+int get_opxns(hls_opxns_t **opxns, char *arg);
 int hls(char *dpath);
 char **get_fpaths(DIR *dstrm, char *opxns);
 fname_t **get_fnames(char **fpaths, char *opxns);
