@@ -30,9 +30,6 @@ int main(int argc, char **argv)
 	if (initialize_opxns(&opxns) != 0)
 		return (2);
 
-	printf("opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n",
-	       opxns->ftparams, opxns->finfo, opxns->pformat);
-
 	for (fargc = 0, i = 1; i < argc; i++)
 	{
 		if (argv[i][0] == '-') /* arg is option(s) */
@@ -51,7 +48,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	printf("opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n",
+	printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n",
 	       opxns->ftparams, opxns->finfo, opxns->pformat);
 
 	if (fargc == 0)
@@ -86,7 +83,6 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
 	if (*opxns_dp == NULL)
 		return (2);
 
-	printf("opxns_dp is %p\n", (void *) opxns_dp);
 	(*opxns_dp)->ftparams = 0;
 	(*opxns_dp)->finfo = 0;
 	(*opxns_dp)->pformat = 0;
