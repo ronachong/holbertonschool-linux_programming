@@ -17,8 +17,6 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams)
 {
 	struct dirent *ent;
 
-	ftparams = ftparams;
-
 	if (*fpaths_dp != NULL)
 		return (1);
 
