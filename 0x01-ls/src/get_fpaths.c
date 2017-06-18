@@ -8,17 +8,17 @@
  * @opxns: 
  * Return: 
  */
-char **get_fpaths(DIR *dstrm, hls_opxns_t *opxns)
+char **get_fpaths(DIR *dstrm, int ftparams)
 {
 	char **fpaths;
 	struct dirent *ent;
 
 	fpaths = NULL;
-	opxns = opxns;
+	ftparams = ftparams;
 
 	while ((ent = readdir(dstrm)) != NULL)
 		/* if filetype is hidden:
-		   1. continue (skip) if -A and -a not in options;
+		   1. continue (skip) if opxns->
 		   2. continue (skip) if '.' and '..' and -A in opxns:
 		   3. execute like normal (add to char string) if -a in options
 		*/
