@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "hls-components.h"
-#include "list.h"
 
  /* implement default behavior when no farg passed */
  /* calculate return when multiple calls to ls are made */
@@ -18,35 +17,18 @@
 int main(int argc, char **argv)
 {
 	int i;
+	int ret;
 	hls_opxns_t *opxns;
 	int fargc;
 	List *fargs;
 	List *farg;
 
-	/* parse argv for fargs, fargc, and opxns */
+	/* parse argv for opxns, fargs, and fargc */
 	opxns = NULL;
 	fargs = NULL;
-
-	if (initialize_opxns(&opxns) != 0)
-		return (2);
-
-	for (fargc = 0, i = 1; i < argc; i++)
-	{
-		if (argv[i][0] == '-') /* arg is option(s) */
-		{
-			if (get_opxns(opxns, argv[i]) == 1)
-				return (1);
-		}
-		else /* arg is file arg */
-		{
-			fargc++;
-			if (alpha_insert_in_list(&fargs, argv[i]) == 1)
-			{
-				printf("Error allocating space\n");
-				return (2);
-			}
-		}
-	}
+	fargc = 0;
+	if ((ret = parse_argv(&opxns, &fargs, &fargc, argc, argv)) != 0)
+		return (ret);
 
 	printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n",
 	       opxns->ftparams, opxns->finfo, opxns->pformat);
@@ -67,6 +49,48 @@ int main(int argc, char **argv)
 	return (0);
 }
 
+
+/**
+ * parse_argv - parse argv for options, file args, and file arg count
+ * @opxns_dp - pointer to opxns pointer (opxns represents parameters for hls
+ * call(s))
+ * @fargs_dp - pointer to fargs pointer (fargs represents file arguments from
+ * cmd line)
+ * @fargc_p - pointer to fargc/count of file arguments from cmd line
+ * @argc - count of all args from cmd line
+ * @argv - string array of args from cmd line
+ * Return:
+ *     0      if OK,
+ *     1      if minor problems (e.g., cannot access subdirectory),
+ *     2      if serious trouble (e.g., cannot access command-line argument).
+ */
+int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
+	       int argc, char **argv)
+{
+	int i;
+
+	if (initialize_opxns(opxns_dp) != 0)
+		return (2);
+
+	for (i = 1; i < argc; i++)
+	{
+		if (argv[i][0] == '-') /* arg is option(s) */
+		{
+			if (get_opxns(*opxns_dp, argv[i]) == 1)
+				return (1);
+		}
+		else /* arg is file arg */
+		{
+			(*fargc_p)++;
+			if (alpha_insert_in_list(fargs_dp, argv[i]) == 1)
+			{
+				printf("Error allocating space\n");
+				return (2);
+			}
+		}
+	}
+	return (0);
+}
 
 /**
  * intialize_opxns - create struct representing params for hls call(s); set

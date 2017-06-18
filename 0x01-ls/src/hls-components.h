@@ -2,7 +2,7 @@
 #define HEADER_FILE
 #include <dirent.h>
 #include <sys/types.h>
-
+#include "list.h"
 
 /**
  * struct hls_opxns - representation of parameters for hls call
@@ -53,6 +53,8 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
+int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
+	       int argc, char **argv);
 int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath);
