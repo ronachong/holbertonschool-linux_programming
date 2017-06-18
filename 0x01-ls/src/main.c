@@ -29,6 +29,9 @@ int main(int argc, char **argv)
 	if (initialize_opxns(&opxns) != 0)
 		return (2);
 
+	printf("opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n",
+	       opxns->ftparams, opxns->finfo, opxns->pformat);
+
 	for (fargc = 0, i = 1; i < argc; i++)
 	{
 		if (argv[i][0] == '-') /* arg is option(s) */
@@ -46,6 +49,9 @@ int main(int argc, char **argv)
 			}
 		}
 	}
+
+	printf("opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n",
+	       opxns->ftparams, opxns->finfo, opxns->pformat);
 
 	if (fargc == 0)
 		return hls("N/A"); /* TODO: change to cwd */
@@ -69,7 +75,7 @@ int main(int argc, char **argv)
  * @opxns: pointer to hls
  * Return: 0 for success, 1 for invalid opxns, 2 for malloc error
  */
-int initialize_opxns(hls_opxns_t opxns)
+int initialize_opxns(hls_opxns_t **opxns)
 {
 	if (opxns != NULL)
 		return (1);
