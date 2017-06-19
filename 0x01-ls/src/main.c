@@ -130,7 +130,7 @@ int get_opxns(hls_opxns_t *opxns, char *arg)
 	{
 		if (arg[i] == 'A' && opxns->ftparams != 2)
 			opxns->ftparams = 1;
-		else if (arg[i] == 2)
+		else if (arg[i] == 'a')
 			opxns->ftparams = 2;
 		else if (arg[i] == 'S' && opxns->finfo != 2)
 			opxns->finfo = 1;
