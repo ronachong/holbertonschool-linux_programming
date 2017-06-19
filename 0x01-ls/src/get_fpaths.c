@@ -30,7 +30,7 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams)
 			case 0:
 				continue;
 			case 1:
-				if (ent->d_name[1] == '\0' || (ent->d_name[1] == '.' && ent->d_name[2] == '0'))
+				if (ent->d_name[1] == '\0' || (ent->d_name[1] == '.' && ent->d_name[2] == '\0'))
 						continue;
 				else
 					break;
