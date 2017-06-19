@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 	if ((ret = parse_argv(&opxns, &fargs, &fargc, argc, argv)) != 0)
 		return (ret);
 
-	printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n",
-	       opxns->ftparams, opxns->finfo, opxns->pformat);
+	/* printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n", */
+	/*        opxns->ftparams, opxns->finfo, opxns->pformat); */
 
 	if (fargc == 0)
 		return hls(".", opxns);

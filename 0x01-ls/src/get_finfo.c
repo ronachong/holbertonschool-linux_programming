@@ -21,7 +21,7 @@ int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp)
 	{
 		/* query lstat for file size */
 		lstat(strconcat(dpath, path->str), &stat);
-		printf("DB: %s: size is %i\n", path->str, (int) stat.st_size);
+		/* printf("DB: %s: size is %i\n", path->str, (int) stat.st_size); */
 		size_insert_in_finfo(finfo_dp, path->str, stat.st_size);
 		
 	}
@@ -65,7 +65,7 @@ int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 			break;
 		fi_node=fi_node->next;
 	}
-	printf("inserting after %p\n", (void *)fi_node_prev);
+	/* printf("inserting after %p\n", (void *)fi_node_prev); */
 	insert_fi_node(fi_node_prev, fname, fsize);
 
 	return (0);
