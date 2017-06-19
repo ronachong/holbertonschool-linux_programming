@@ -22,7 +22,6 @@
  * @pformat: printing format for output
  *     0    use new line as separator between file names or info
  *     1    use space as separator between file names or info
- * Description: 
  *
  */
 typedef struct hls_opxns
@@ -32,6 +31,13 @@ typedef struct hls_opxns
 	int pformat;
 } hls_opxns_t;
 
+
+/**
+ * struct finfo_s - representation of file info (name and size)
+ * @name: file name
+ * @size: file size in bytes
+ * @next: link to another finfo node in linked list
+ */
 typedef struct finfo_s
 {
 	char *name;
@@ -39,6 +45,17 @@ typedef struct finfo_s
 	struct finfo_s *next;
 } finfo_t;
 
+/**
+ * struct finfo_s - representation of file info (verbose)
+ * @name: file name
+ * @size: file size in bytes
+ * @perm:
+ * @smth:
+ * @user:
+ * @owner:
+ * @date:
+ * @next: link to another finfo node in linked list
+ */
 typedef struct vfinfo_s
 {
 	char *name;
@@ -51,8 +68,7 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
-int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
-	       int argc, char **argv);
+int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, char **argv);
 int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath, hls_opxns_t *opxns);

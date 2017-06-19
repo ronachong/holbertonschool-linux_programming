@@ -5,6 +5,7 @@
 /**
  * hls - list the contents of a directory
  * @dpath: path of directory
+ * @opxns: struct representing params for hls call
  *
  * Return: same as ls returns -
  *     0      if OK,
@@ -23,7 +24,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	get_fpaths(&fpaths, dstrm, opxns->ftparams);
 	closedir(dstrm);
 
-	switch(opxns->finfo)
+	switch (opxns->finfo)
 	{
 	case 0:
 		print_fnames(fpaths, opxns->pformat);

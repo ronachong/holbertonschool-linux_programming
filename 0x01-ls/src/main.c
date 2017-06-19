@@ -26,16 +26,18 @@ int main(int argc, char **argv)
 	opxns = NULL;
 	fargs = NULL;
 	fargc = 0;
-	if ((ret = parse_argv(&opxns, &fargs, &fargc, argc, argv)) != 0)
+
+	ret = parse_argv(&opxns, &fargs, &fargc, argc, argv);
+	if (ret != 0)
 		return (ret);
 
 	/* printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n", */
 	/*        opxns->ftparams, opxns->finfo, opxns->pformat); */
 
 	if (fargc == 0)
-		return hls(".", opxns);
+		return (hls(".", opxns));
 	if (fargc == 1)
-		return hls(fargs->str, opxns);
+		return (hls(fargs->str, opxns));
 	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)
 	{
 		if (i > 0)
@@ -51,21 +53,20 @@ int main(int argc, char **argv)
 
 /**
  * parse_argv - parse argv for options, file args, and file arg count
- * @opxns_dp - pointer to opxns pointer (opxns represents parameters for hls
+ * @opxns_dp: pointer to opxns pointer (opxns represents parameters for hls
  * call(s))
- * @fargs_dp - pointer to fargs pointer (fargs represents file arguments from
+ * @fargs_dp: pointer to fargs pointer (fargs represents file arguments from
  * cmd line)
- * @fargc_p - pointer to fargc/count of file arguments from cmd line
- * @argc - count of all args from cmd line
- * @argv - string array of args from cmd line
+ * @fargc_p: pointer to fargc/count of file arguments from cmd line
+ * @argc: count of all args from cmd line
+ * @argv: string array of args from cmd line
  *
  * Return:
  *     0      if OK,
  *     1      if minor problems (e.g., cannot access subdirectory),
  *     2      if serious trouble (e.g., cannot access command-line argument).
  */
-int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
-	       int argc, char **argv)
+int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, char **argv)
 {
 	int i;
 
@@ -93,9 +94,9 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p,
 }
 
 /**
- * intialize_opxns - create struct representing params for hls call(s); set
+ * initialize_opxns - create struct representing params for hls call(s); set
  * values to default
- * @opxns: pointer to hls_options_t pointer set to NULL
+ * @opxns_dp: pointer to hls_options_t pointer set to NULL
  *
  * Return: 0 for success, 1 for invalid opxns, 2 for malloc error
  */
