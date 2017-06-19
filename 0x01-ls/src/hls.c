@@ -15,8 +15,10 @@ int hls(char *dpath, hls_opxns_t *opxns)
 {
 	DIR *dstrm;
 	List *fpaths;
+	finfo_t *finfo;
 
-	fpaths = NULL;
+	fpaths = NULL; /* TODO: free linked list */
+	finfo = NULL; /* TODO: free finfo list */
 	dstrm = opendir(dpath);
 	get_fpaths(&fpaths, dstrm, opxns->ftparams);
 	closedir(dstrm);
@@ -27,7 +29,8 @@ int hls(char *dpath, hls_opxns_t *opxns)
 		print_fnames(fpaths, opxns->pformat);
 		break;
 	case 1:
-		printf("\nDEBUG: output still to implement\n");
+		get_finfo(&finfo, dpath, &fpaths);
+		print_finfo(finfo, opxns->pformat);
 		break;
 	case 2:
 		printf("\nDEBUG: output still to implement\n");

@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	       opxns->ftparams, opxns->finfo, opxns->pformat);
 
 	if (fargc == 0)
-		return hls("N/A", opxns); /* TODO: change to cwd */
+		return hls(".", opxns);
 	if (fargc == 1)
 		return hls(fargs->str, opxns);
 	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)

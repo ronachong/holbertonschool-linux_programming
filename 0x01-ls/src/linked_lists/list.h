@@ -7,6 +7,7 @@ typedef struct List {
 } List;
 
 int add_node(List **list, char *content);
+char *copy_string(char *s);
 void free_list(List *list);
 int insert_in_list(List **list, char *content, int index);
 int list_size(List *list);

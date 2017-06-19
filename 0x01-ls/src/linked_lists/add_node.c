@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "list.h"
 
-char *copy_string(char *);
 int find_length(char *);
 
 /* add_node takes in two inputs, 1) a pointer to the address of the first node in a list, /list/;

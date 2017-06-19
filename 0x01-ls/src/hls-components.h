@@ -1,10 +1,13 @@
 #ifndef HEADER_FILE
 #define HEADER_FILE
-#include <dirent.h>
-#include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "list.h"
+#include "str.h"
 
 /**
  * struct hls_opxns - representation of parameters for hls call
@@ -29,24 +32,17 @@ typedef struct hls_opxns
 	int pformat;
 } hls_opxns_t;
 
-
-typedef struct fname_s
-{
-	char *name;
-	struct fname_s *next;
-} fname_t;
-
 typedef struct finfo_s
 {
 	char *name;
-	int *size;
+	int size;
 	struct finfo_s *next;
 } finfo_t;
 
 typedef struct vfinfo_s
 {
 	char *name;
-	int *size;
+	int size;
 	char *perm;
 	char *smth;
 	char *user;
@@ -61,10 +57,12 @@ int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath, hls_opxns_t *opxns);
 int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams);
-fname_t **get_fnames(char **fpaths, char *opxns);
-int print_fnames(List *fnames, int pformat);
-finfo_t **get_finfo(char **fpaths, char *opxns);
-int print_finfo(finfo_t **finfo, char *opxns);
+int print_fnames(List *list, int pformat);
+int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp);
+int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize);
+int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize);
+int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize);
+int print_finfo(finfo_t *finfo, int pformat);
 vfinfo_t **get_vfinfo(char **fpaths, char *opxns);
 int print_vfinfo(vfinfo_t **vfinfo, char *opxns);
 
