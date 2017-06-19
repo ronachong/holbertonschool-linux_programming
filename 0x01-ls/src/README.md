@@ -1,0 +1,1 @@
+This directory contains the source code and executable for holberton ls/hls.
