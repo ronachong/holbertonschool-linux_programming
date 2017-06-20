@@ -144,8 +144,8 @@ vfinfo_t *get_vfi_node(char *fname, struct stat stat)
 	if (vfi_node->perm == NULL)
 		return (NULL);
 	vfi_node->nlink = stat.st_nlink;
-	vfi_node->uid = "tbi"; /* stat.st_uid; */
-	vfi_node->gid = "tbi"; /* stat.st_gid; */
+	vfi_node->uid = getpwuid(stat.st_uid)->pw_name; /* TODO: handle undef'd */
+	vfi_node->gid = getgrgid(stat.st_gid)->gr_name; /* TODO: handle undef'd */
 	vfi_node->mtime = "tbi"; /* stat.st_mtime; */
 	vfi_node->next = NULL;
 
