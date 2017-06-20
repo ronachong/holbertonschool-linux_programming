@@ -10,7 +10,7 @@
 int print_vfinfo(vfinfo_t *vfinfo)
 {
 	vfinfo_t *vfi_node;
-	char mtime[17];
+	char mtime[13];
 	int i;
 
 	printf("DB: in print_vfinfo\n");
@@ -18,6 +18,8 @@ int print_vfinfo(vfinfo_t *vfinfo)
 	vfi_node = vfinfo;
 	
 	for (i = 0; i < 16; i++)
+		while (i < 4)
+			continue;
 		mtime[i] = (vfi_node->mtime)[i];
 	mtime[16] = '\0';
 
