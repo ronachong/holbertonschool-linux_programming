@@ -121,7 +121,7 @@ int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 }
 
 /**
- * add_vfi_node - create a vfinfo node for linked vfinfo list
+ * get_vfi_node - create a vfinfo node for linked vfinfo list
  * @fname: file name to store in vfinfo node
  * @stat: file info to store in vfinfo node
  *
