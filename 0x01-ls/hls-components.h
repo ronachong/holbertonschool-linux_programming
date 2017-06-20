@@ -83,6 +83,7 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp);
 int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat);
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
+vfinfo_t *get_vfi_node(char *fname, struct stat stat);
 int print_vfinfo(vfinfo_t *vfinfo);
 
 #endif

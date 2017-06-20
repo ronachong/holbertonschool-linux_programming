@@ -88,21 +88,11 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 
 	printf("in insert_vfinfo\n");
 
-	vfi_node_new = malloc(sizeof(vfinfo_t));
+	vfi_node_new = get_vfi_node(fname, stat);
 	if (vfi_node_new == NULL)
 		return (2);
 
-	/* TOCHECK: is using the og values ok for ptrs, or should i use copy_str? */
-	vfi_node_new->name = fname; /* TODO: fix copy_str? */
-	vfi_node_new->size = stat.st_size;
-	vfi_node_new->perm = "tbi";
-	vfi_node_new->nlink = stat.st_nlink;
-	vfi_node_new->uid = "tbi"; /* stat.st_uid; */
-	vfi_node_new->gid = "tbi"; /* stat.st_gid; */
-	vfi_node_new->mtime = "tbi"; /* stat.st_mtime; */
 	vfi_node_new->next = vfi_node_prev->next;
-
-
 	vfi_node_prev->next = vfi_node_new;
 	return (0);
 }
@@ -111,19 +101,39 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
  * add_vfi_node - add a vfinfo node as head to linked vfinfo list
  * @vfinfo_dp: pointer to ptr to head of linked vfinfo list
  * @fname: file name to store in vfinfo node
- * @fsize: file size to store in vfinfo node
+ * @stat: file info to store in vfinfo node
  *
  * Return: 0 for success, 2 for malloc failure
  */
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
-	vfinfo_t *vfi_node;
+	vfinfo_t *vfinfo_old;
 
 	printf("in add_vfi_node\n");
 
+	vfinfo_old = *vfinfo_dp;
+	*vfinfo_dp = get_vfi_node(fname, stat);
+	if (*vfinfo_dp == NULL)
+		return (2);
+
+	(*vfinfo_dp)->next = vfinfo_old;
+	return (0);
+}
+
+/**
+ * add_vfi_node - create a vfinfo node for linked vfinfo list
+ * @fname: file name to store in vfinfo node
+ * @stat: file info to store in vfinfo node
+ *
+ * Return: ptr to new node, (NULL in case of malloc failure)
+ */
+vfinfo_t *get_vfi_node(char *fname, struct stat stat)
+{
+	vfinfo_t *vfi_node;
+
 	vfi_node = malloc(sizeof(vfinfo_t));
 	if (vfi_node == NULL)
-		return (2);
+		return (NULL);
 
 	/* TOCHECK: is using the og values ok for ptrs, or should i use copy_str? */
 	vfi_node->name = copy_string(fname); /* TODO: fix copy_str? */
@@ -133,8 +143,7 @@ int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	vfi_node->uid = "tbi"; /* stat.st_uid; */
 	vfi_node->gid = "tbi"; /* stat.st_gid; */
 	vfi_node->mtime = "tbi"; /* stat.st_mtime; */
-	vfi_node->next = *vfinfo_dp;
+	vfi_node->next = NULL;
 
-	*vfinfo_dp = vfi_node;
-	return (0);
+	return (vfi_node);
 }
