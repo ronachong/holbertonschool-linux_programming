@@ -50,10 +50,10 @@ typedef struct finfo_s
  * @name: file name
  * @size: file size in bytes
  * @perm:
- * @smth:
- * @user:
- * @owner:
- * @date:
+ * @nlink:
+ * @uid:
+ * @gid:
+ * @mtime:
  * @next: link to another finfo node in linked list
  */
 typedef struct vfinfo_s
@@ -61,10 +61,10 @@ typedef struct vfinfo_s
 	char *name;
 	int size;
 	char *perm;
-	char *smth;
-	char *user;
-	char *owner;
-	char *date;
+	int nlink;
+	char *uid;
+	char *gid;
+	char *mtime;
 	struct vfinfo_s *next;
 } vfinfo_t;
 
@@ -79,7 +79,10 @@ int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize);
 int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize);
 int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize);
 int print_finfo(finfo_t *finfo, int pformat);
-vfinfo_t **get_vfinfo(char **fpaths, char *opxns);
-int print_vfinfo(vfinfo_t **vfinfo, char *opxns);
+int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp);
+int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
+int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat);
+int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
+int print_vfinfo(vfinfo_t *vfinfo);
 
 #endif
