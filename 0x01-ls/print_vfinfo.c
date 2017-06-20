@@ -10,10 +10,17 @@
 int print_vfinfo(vfinfo_t *vfinfo)
 {
 	vfinfo_t *vfi_node;
+	char mtime[17];
+	int i;
 
 	printf("DB: in print_vfinfo\n");
 
 	vfi_node = vfinfo;
+	
+	for (i = 0; i < 16; i++)
+		mtime[i] = (vfi_node->mtime)[i];
+	mtime[16] = '\0';
+
 	while (vfi_node != NULL)
 	{
 		printf("%s %i %s %s %i %s %s\n",
@@ -22,7 +29,7 @@ int print_vfinfo(vfinfo_t *vfinfo)
 		       vfi_node->uid,
 		       vfi_node->gid,
 		       vfi_node->size,
-		       vfi_node->mtime,
+		       mtime,
 		       vfi_node->name
 			);
 		vfi_node = vfi_node->next;
