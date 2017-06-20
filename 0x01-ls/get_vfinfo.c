@@ -92,16 +92,23 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 	if (vfi_node_new == NULL)
 		return (2);
 
-	vfi_node_new->name = fname;
+	/* TOCHECK: is using the og values ok for ptrs, or should i use copy_str? */
+	vfi_node_new->name = fname; /* TODO: fix copy_str? */
 	vfi_node_new->size = stat.st_size;
+	vfi_node_new->perm = "tbi";
+	vfi_node_new->nlink = stat.st_nlink;
+	vfi_node_new->uid = "tbi"; /* stat.st_uid; */
+	vfi_node_new->gid = "tbi"; /* stat.st_gid; */
+	vfi_node_new->mtime = "tbi"; /* stat.st_mtime; */
 	vfi_node_new->next = vfi_node_prev->next;
+
 
 	vfi_node_prev->next = vfi_node_new;
 	return (0);
 }
 
 /**
- * add_vfi_node - add a vfinfo node to linked vfinfo list
+ * add_vfi_node - add a vfinfo node as head to linked vfinfo list
  * @vfinfo_dp: pointer to ptr to head of linked vfinfo list
  * @fname: file name to store in vfinfo node
  * @fsize: file size to store in vfinfo node
@@ -118,9 +125,10 @@ int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	if (vfi_node == NULL)
 		return (2);
 
-	vfi_node->name = copy_string(fname);
+	/* TOCHECK: is using the og values ok for ptrs, or should i use copy_str? */
+	vfi_node->name = copy_string(fname); /* TODO: fix copy_str? */
 	vfi_node->size = stat.st_size;
-	vfi_node->perm = "to be implemented";
+	vfi_node->perm = "tbi";
 	vfi_node->nlink = stat.st_nlink;
 	vfi_node->uid = "tbi"; /* stat.st_uid; */
 	vfi_node->gid = "tbi"; /* stat.st_gid; */
