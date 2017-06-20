@@ -13,6 +13,8 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp)
 	List *path;
 	struct stat stat;
 
+	printf("in get_vfinfo\n");
+
 	if (dpath[get_len(dpath) - 1] != '/')
 		dpath = strconcat(dpath, "/");
 	/* TODO: free allocated dpath? */
@@ -41,6 +43,8 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	/* int i; */
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
+
+	printf("in size_insert_vfinfo\n");
 
 	/* i = 0; */
 	vfi_node = *vfinfo_dp;
@@ -82,6 +86,8 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 {
 	vfinfo_t *vfi_node_new;
 
+	printf("in insert_vfinfo\n");
+
 	vfi_node_new = malloc(sizeof(vfinfo_t));
 	if (vfi_node_new == NULL)
 		return (2);
@@ -105,6 +111,8 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
 	vfinfo_t *vfi_node;
+
+	printf("in add_vfi_node\n");
 
 	vfi_node = malloc(sizeof(vfinfo_t));
 	if (vfi_node == NULL)

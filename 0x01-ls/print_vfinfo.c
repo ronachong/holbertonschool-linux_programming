@@ -11,6 +11,8 @@ int print_vfinfo(vfinfo_t *vfinfo)
 {
 	vfinfo_t *vfi_node;
 
+	printf("DB: in print_vfinfo\n");
+
 	vfi_node = vfinfo;
 	while (vfi_node != NULL)
 	{

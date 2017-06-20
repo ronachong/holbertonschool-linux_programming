@@ -20,7 +20,9 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	vfinfo_t *vfinfo;
 
 	fpaths = NULL;
-	finfo = NULL; 
+	finfo = NULL;
+	vfinfo = NULL;
+
 	dstrm = opendir(dpath);
 	get_fpaths(&fpaths, dstrm, opxns->ftparams);
 	closedir(dstrm);
