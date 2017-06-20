@@ -18,10 +18,15 @@ int print_vfinfo(vfinfo_t *vfinfo)
 	vfi_node = vfinfo;
 	
 	for (i = 0; i < 16; i++)
+	{
 		while (i < 4)
+		{
+			i++;
 			continue;
-		mtime[i] = (vfi_node->mtime)[i];
-	mtime[16] = '\0';
+		}
+		mtime[i - 4] = (vfi_node->mtime)[i];
+	}
+	mtime[12] = '\0';
 
 	while (vfi_node != NULL)
 	{
