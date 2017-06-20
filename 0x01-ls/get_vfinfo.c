@@ -135,10 +135,14 @@ vfinfo_t *get_vfi_node(char *fname, struct stat stat)
 	if (vfi_node == NULL)
 		return (NULL);
 
-	/* TOCHECK: is using the og values ok for ptrs, or should i use copy_str? */
-	vfi_node->name = copy_string(fname); /* TODO: fix copy_str? */
+	/* TOCHECK: is using the og values ok for ptrs, or should i use
+	   copy_str? copy_str is necessary if I want to know that I need char *
+	   freeing at end? */
+	vfi_node->name = fname; /* TODO: fix copy_str? */
 	vfi_node->size = stat.st_size;
-	vfi_node->perm = "tbi";
+	vfi_node->perm = get_pstrv(stat.st_mode);
+	if (vfi_node->perm == NULL)
+		return (NULL);
 	vfi_node->nlink = stat.st_nlink;
 	vfi_node->uid = "tbi"; /* stat.st_uid; */
 	vfi_node->gid = "tbi"; /* stat.st_gid; */
@@ -146,4 +150,33 @@ vfinfo_t *get_vfi_node(char *fname, struct stat stat)
 	vfi_node->next = NULL;
 
 	return (vfi_node);
+}
+
+/**
+ * get_pstrv - get permission string for given st_mode/file perms
+ * @mode: code for file perms
+ *
+ * Return: pointer to string representing file perms
+ */
+char *get_pstrv(int mode)
+{
+	char *pstr;
+
+	pstr = malloc(sizeof('c')*11);
+	if (pstr == NULL)
+		return NULL;
+
+	pstr[0] = (S_ISDIR(mode)) ? 'd':'-';
+	pstr[1] = (mode & S_IRUSR) ? 'r':'-';
+	pstr[2] = (mode & S_IWUSR) ? 'w':'-';
+	pstr[3] = (mode & S_IXUSR) ? 'x':'-';
+	pstr[4] = (mode & S_IRGRP) ? 'r':'-';
+	pstr[5] = (mode & S_IWGRP) ? 'w':'-';
+	pstr[6] = (mode & S_IXGRP) ? 'x':'-';
+	pstr[7] = (mode & S_IROTH) ? 'r':'-';
+	pstr[8] = (mode & S_IWOTH) ? 'w':'-';
+	pstr[9] = (mode & S_IXOTH) ? 'x':'-';
+	pstr[10] = '\0';
+
+       	return (pstr);
 }
