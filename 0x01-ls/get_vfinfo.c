@@ -21,9 +21,7 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp)
 
 	for (path = *fpaths_dp; path != NULL; path = path->next)
 	{
-		/* query lstat for file size */
 		lstat(strconcat(dpath, path->str), &stat);
-		/* printf("DB: %s: size is %i\n", path->str, (int) stat.st_size); */
 		size_insert_in_vfinfo(vfinfo_dp, path->str, stat);
 	}
 	return (0);
