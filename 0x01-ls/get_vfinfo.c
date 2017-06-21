@@ -8,7 +8,8 @@
  *
  * Return: 0 for success
  */
-int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp)
+int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
+	       int forder)
 {
 	List *path;
 	struct stat stat;
@@ -22,7 +23,13 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp)
 	for (path = *fpaths_dp; path != NULL; path = path->next)
 	{
 		lstat(strconcat(dpath, path->str), &stat);
-		size_insert_in_vfinfo(vfinfo_dp, path->str, stat);
+		/* TODO: potentially optimize to eliminate unnecessary
+		   if checks
+		*/
+		if (forder == 1)
+			alpha_insert_in_vfinfo(vfinfo_dp, path->str, stat);
+		else if (forder == 2)
+			size_insert_in_vfinfo(vfinfo_dp, path->str, stat);
 	}
 	return (0);
 }
@@ -46,10 +53,10 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	/* i = 0; */
 	vfi_node = *vfinfo_dp;
 
-	if (vfi_node == NULL || cmpstr(fname, vfi_node->name) > 0)
+	if (vfi_node == NULL || cmpstr(fname, vfi_node->name) < 0)
 		return (add_vfi_node(vfinfo_dp, fname, stat));
 
-	while (vfi_node != NULL && cmpstr(fname, vfi_node->name)> 0)
+	while (vfi_node != NULL && cmpstr(fname, vfi_node->name) > 0)
 	{
 		vfi_node_prev = vfi_node;
 		vfi_node=vfi_node->next;

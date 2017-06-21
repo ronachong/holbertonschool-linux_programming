@@ -38,7 +38,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
                 /* TODO: free finfo list */
 		break;
 	case 2:
-		get_vfinfo(&vfinfo, dpath, &fpaths);
+		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder);
 		print_vfinfo(vfinfo);
 		/* TODO: free vfinfo list */
 		break;
