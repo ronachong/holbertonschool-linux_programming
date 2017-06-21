@@ -5,9 +5,9 @@
  * @fnames: ptr to head of linked list of file names
  * @pformat: code representing whether to print one name per line or inline
  *
- * Return: 0 for success
+ * Return: void
  */
-int print_fnames(List *fnames, int pformat)
+void print_fnames(List *fnames, int pformat)
 {
 	char *sep;
 	List *name;

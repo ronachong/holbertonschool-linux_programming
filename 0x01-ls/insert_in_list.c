@@ -69,7 +69,8 @@ int insert_new_node(List *ptr_to_node_prior, char *str, List *next_to_assign) {
   /* allocate space for node */
   ptr_to_node = malloc(sizeof(struct List));
   if (ptr_to_node == NULL) {
-      return 1;
+      perror("malloc: "
+      return 2;
   }
 
   /* assign string and next vals to node */

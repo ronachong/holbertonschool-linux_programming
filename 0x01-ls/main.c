@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 {
 	int i;
 	int ret;
+	int retnw;
 	hls_opxns_t *opxns;
 	int fargc;
 	List *fargs;
@@ -38,16 +39,16 @@ int main(int argc, char **argv)
 		return (hls(".", opxns));
 	if (fargc == 1)
 		return (hls(fargs->str, opxns));
-	for (i = 0, farg = fargs; i < fargc; i++, farg = farg->next)
+	for (i = 0, farg = fargs, ret = 0; i < fargc; i++, farg = farg->next)
 	{
 		if (i > 0)
 			putchar('\n');
 		printf("%s:\n", farg->str);
-		hls(farg->str, opxns);
+		retnw = hls(farg->str, opxns);
+		ret = (retnw > ret) ? retnw:ret;
 	}
-	/* TODO: compute return val */
 	/* TODO: free fargs */
-	return (0);
+	return (ret);
 }
 
 
@@ -69,9 +70,11 @@ int main(int argc, char **argv)
 int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, char **argv)
 {
 	int i;
+	int ret;
 
-	if (initialize_opxns(opxns_dp) != 0)
-		return (2);
+	ret = initialize_opxns(opxns_dp);
+	if (ret != 0)
+		return ret;
 
 	for (i = 1; i < argc; i++)
 	{
@@ -83,11 +86,8 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, 
 		else /* arg is file arg */
 		{
 			(*fargc_p)++;
-			if (alpha_insert_in_list(fargs_dp, argv[i]) == 1)
-			{
-				printf("Error allocating space\n");
+			if (alpha_insert_in_list(fargs_dp, argv[i]) == 2)
 				return (2);
-			}
 		}
 	}
 	return (0);
@@ -103,11 +103,15 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, 
 int initialize_opxns(hls_opxns_t **opxns_dp)
 {
 	if (*opxns_dp != NULL)
+		printf("Programming error: *opxns_dp != NULL");
 		return (1);
 
 	*opxns_dp = malloc(sizeof(struct hls_opxns));
 	if (*opxns_dp == NULL)
+	{
+		perror("malloc :");
 		return (2);
+	}
 
 	(*opxns_dp)->ftparams = 0;
 	(*opxns_dp)->finfo = 0;

@@ -34,7 +34,7 @@ int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp)
  * @fname: file name to store in new node
  * @fsize: file size to store in new node
  *
- * Return: 0 for success, 2 for malloc failure
+ * Return: 0 for success, (tbi - 2 for malloc failure)
  */
 int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 {
@@ -64,7 +64,6 @@ int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 			break;
 		fi_node = fi_node->next;
 	}
-	/* printf("inserting after %p\n", (void *)fi_node_prev); */
 	insert_fi_node(fi_node_prev, fname, fsize);
 
 	return (0);
@@ -84,7 +83,10 @@ int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize)
 
 	fi_node_new = malloc(sizeof(finfo_t));
 	if (fi_node_new == NULL)
+	{
+		perror("malloc");
 		return (2);
+	}
 
 	fi_node_new->name = fname;
 	fi_node_new->size = fsize;
@@ -108,7 +110,10 @@ int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize)
 
 	fi_node = malloc(sizeof(finfo_t));
 	if (fi_node == NULL)
+	{
+		perror("malloc");
 		return (2);
+	}
 
 	fi_node->name = copy_string(fname);
 	fi_node->size = fsize;

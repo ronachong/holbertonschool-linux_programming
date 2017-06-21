@@ -18,7 +18,8 @@ int add_node(List **list, char *content) {
   
   ptr_to_node = malloc(sizeof(struct List));
   if (ptr_to_node == NULL) {
-    return 1;
+    perror("malloc: ");
+    return 2;
   }
 
   ptr_to_node->str = copy_string(content);

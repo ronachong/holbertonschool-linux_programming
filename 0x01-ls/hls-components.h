@@ -82,7 +82,7 @@ int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath, hls_opxns_t *opxns);
 int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams);
-int print_fnames(List *list, int pformat);
+void print_fnames(List *list, int pformat);
 int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp);
 int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize);
 int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize);

@@ -5,7 +5,7 @@
  * alpha_insert_in_list - insert a node in an alphabetically sorted link list
  * @list: pointer to pointer to first node in linked list
  * @content: string content for node to insert
- * Return: 0 for error?
+ * Return: 0 for success, 2 for malloc error
  */
 int alpha_insert_in_list(List **list, char *content)
 {
