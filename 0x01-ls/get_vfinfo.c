@@ -29,9 +29,42 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp)
 	return (0);
 }
 
+/**
+ * alpha_insert_in_vfinfo - insert new node in vfinfo linked list by name of file
+ * @vfinfo_dp: ptr to ptr to head of vfinfo linked list
+ * @fname: file name to store in new node
+ * @stat: stat buffer containing file details to store in new node
+ *
+ * Return: 0 for success, 2 for malloc failure
+ */
+int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
+{
+	/* int i; */
+	vfinfo_t *vfi_node;
+	vfinfo_t *vfi_node_prev;
+
+	printf("in size_insert_vfinfo\n");
+
+	/* i = 0; */
+	vfi_node = *vfinfo_dp;
+
+	if (vfi_node == NULL || cmpstr(fname, vfi_node->name) > 0)
+		return (add_vfi_node(vfinfo_dp, fname, stat));
+
+	while (vfi_node != NULL && cmpstr(fname, vfi_node->name)> 0)
+	{
+		vfi_node_prev = vfi_node;
+		vfi_node=vfi_node->next;
+	}
+
+	insert_vfi_node(vfi_node_prev, fname, stat);
+
+	return (0);
+}
 
 /**
- * size_insert_in_vfinfo - insert new node in vfinfo linked list by size of file
+ * size_insert_in_vfinfo - insert new node in vfinfo linked list by size of
+ * file first, then name
  * @vfinfo_dp: ptr to ptr to head of vfinfo linked list
  * @fname: file name to store in new node
  * @stat: stat buffer containing file details to store in new node
