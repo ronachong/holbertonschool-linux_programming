@@ -43,7 +43,7 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
 
-	printf("in size_insert_vfinfo\n");
+	printf("in alpha_insert_vfinfo\n");
 
 	/* i = 0; */
 	vfi_node = *vfinfo_dp;
