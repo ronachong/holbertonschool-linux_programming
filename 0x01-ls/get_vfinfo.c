@@ -14,8 +14,6 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 	List *path;
 	struct stat stat;
 
-	printf("in get_vfinfo\n");
-
 	if (dpath[get_len(dpath) - 1] != '/')
 		dpath = strconcat(dpath, "/");
 	/* TODO: free allocated dpath? */
@@ -44,13 +42,9 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
  */
 int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
-	/* int i; */
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
 
-	printf("in alpha_insert_vfinfo\n");
-
-	/* i = 0; */
 	vfi_node = *vfinfo_dp;
 
 	if (vfi_node == NULL || cmpstr(fname, vfi_node->name) < 0)
@@ -78,13 +72,9 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
  */
 int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
-	/* int i; */
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
 
-	printf("in size_insert_vfinfo\n");
-
-	/* i = 0; */
 	vfi_node = *vfinfo_dp;
 
 	if (vfi_node == NULL)
@@ -106,7 +96,6 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 			break;
 		vfi_node = vfi_node->next;
 	}
-	/* printf("inserting after %p\n", (void *)vfi_node_prev); */
 	insert_vfi_node(vfi_node_prev, fname, stat);
 
 	return (0);
@@ -123,8 +112,6 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 {
 	vfinfo_t *vfi_node_new;
-
-	printf("in insert_vfinfo\n");
 
 	vfi_node_new = get_vfi_node(fname, stat);
 	if (vfi_node_new == NULL)
@@ -146,8 +133,6 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat)
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
 	vfinfo_t *vfinfo_old;
-
-	printf("in add_vfi_node\n");
 
 	vfinfo_old = *vfinfo_dp;
 	*vfinfo_dp = get_vfi_node(fname, stat);
