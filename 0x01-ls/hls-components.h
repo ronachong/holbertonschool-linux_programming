@@ -22,6 +22,11 @@
  *     0    name only
  *     1    name and size
  *     2    name, size, and other details
+ * @forder: order in which to output file names/details
+ *     1    alphabetically
+ *    -1    reverse alphabetically
+ *     2    by size desc, then alphabetically
+ *    -2    by size asc, then alphabetically
  * @pformat: printing format for output
  *     0    use new line as separator between file names or info
  *     1    use space as separator between file names or info
@@ -31,6 +36,7 @@ typedef struct hls_opxns
 {
 	int ftparams;
 	int finfo;
+	int forder;
 	int pformat;
 } hls_opxns_t;
 
@@ -52,11 +58,11 @@ typedef struct finfo_s
  * struct finfo_s - representation of file info (verbose)
  * @name: file name
  * @size: file size in bytes
- * @perm:
- * @nlink:
- * @uid:
- * @gid:
- * @mtime:
+ * @perm: file permissions
+ * @nlink: number of links to file
+ * @uid: owner user
+ * @gid: owner group
+ * @mtime: date modified
  * @next: link to another finfo node in linked list
  */
 typedef struct vfinfo_s

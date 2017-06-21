@@ -111,6 +111,7 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
 
 	(*opxns_dp)->ftparams = 0;
 	(*opxns_dp)->finfo = 0;
+	(*opxns_dp)->forder = 1;
 	(*opxns_dp)->pformat = 0;
 
 	return (0);
@@ -139,6 +140,7 @@ int get_opxns(hls_opxns_t *opxns, char *arg)
 			opxns->ftparams = 2;
 			break;
 		case 'S':
+			opxns->forder = 2;
 			if (opxns->finfo != 2)
 				opxns->finfo = 1;
 			break;
@@ -148,6 +150,9 @@ int get_opxns(hls_opxns_t *opxns, char *arg)
 			break;
 		case '1':
 			opxns->pformat = 1;
+			break;
+		case 'r':
+			opxns->forder *= -1;
 			break;
 		default:
 			printf("ls: invalid option -- '%c'\n", arg[i]);
