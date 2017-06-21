@@ -20,6 +20,4 @@ void print_fnames(List *fnames, int pformat)
 	for (name = fnames; name->next != NULL; name = name->next)
 		printf("%s%s", name->str, sep);
 	printf("%s\n", name->str);
-
-	return (0);
 }

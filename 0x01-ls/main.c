@@ -23,6 +23,8 @@ int main(int argc, char **argv)
 	List *fargs;
 	List *farg;
 
+	printf("DB: main\n");
+
 	/* parse argv for opxns, fargs, and fargc */
 	opxns = NULL;
 	fargs = NULL;
@@ -48,6 +50,8 @@ int main(int argc, char **argv)
 		ret = (retnw > ret) ? retnw:ret;
 	}
 	/* TODO: free fargs */
+
+	free(opxns);
 	return (ret);
 }
 
@@ -71,6 +75,8 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, 
 {
 	int i;
 	int ret;
+
+	printf("DB: - parse_argv\n");
 
 	ret = initialize_opxns(opxns_dp);
 	if (ret != 0)
@@ -102,14 +108,18 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, 
  */
 int initialize_opxns(hls_opxns_t **opxns_dp)
 {
+	printf("DB: -- initialize_opxns\n");
+
 	if (*opxns_dp != NULL)
-		printf("Programming error: *opxns_dp != NULL");
+	{
+		printf("Programming error: *opxns_dp != NULL\n");
 		return (1);
+	}
 
 	*opxns_dp = malloc(sizeof(struct hls_opxns));
 	if (*opxns_dp == NULL)
 	{
-		perror("malloc :");
+		perror("malloc");
 		return (2);
 	}
 
@@ -131,6 +141,8 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
 int get_opxns(hls_opxns_t *opxns, char *arg)
 {
 	int i;
+
+	printf("DB: -- get_opxns\n");
 
 	for (i = 1; arg[i] != '\0'; i++)
 	{

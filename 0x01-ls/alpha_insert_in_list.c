@@ -11,6 +11,9 @@ int alpha_insert_in_list(List **list, char *content)
 {
 	int i;
 	List *ptr_to_node;
+
+	printf("DB: -- alpha_insert_in_list\n");
+
 	i = 0;
 	ptr_to_node = *list;
 
