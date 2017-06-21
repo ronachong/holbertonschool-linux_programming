@@ -129,25 +129,31 @@ int get_opxns(hls_opxns_t *opxns, char *arg)
 
 	for (i = 1; arg[i] != '\0'; i++)
 	{
-		if (arg[i] == 'A' && opxns->ftparams != 2)
-			opxns->ftparams = 1;
-		else if (arg[i] == 'a')
-			opxns->ftparams = 2;
-		else if (arg[i] == 'S' && opxns->finfo != 2)
-			opxns->finfo = 1;
-		else if (arg[i] == 'l')
+		switch (arg[i])
 		{
+		case 'A':
+			if (opxns->ftparams != 2)
+				opxns->ftparams = 1;
+			break;
+		case 'a':
+			opxns->ftparams = 2;
+			break;
+		case 'S':
+			if (opxns->finfo != 2)
+				opxns->finfo = 1;
+			break;
+		case 'l':
 			opxns->finfo = 2;
 			opxns->pformat = 1;
-		}
-		else if (arg[i] == '1')
+			break;
+		case '1':
 			opxns->pformat = 1;
-		else
-		{
+			break;
+		default:
 			printf("ls: invalid option -- '%c'\n", arg[i]);
 			/* TODO: incorporate hls --help? */
 			return (1);
-		}
+		}	      
 	}
 	return (0);
 }
