@@ -45,6 +45,9 @@ char *copy_string(char *s) {
   for (i = 0; i < length; i++) {
     copy[i] = s[i];
   }
+
+  copy[length - 1] = '\0';
+
   return copy;
 }
 

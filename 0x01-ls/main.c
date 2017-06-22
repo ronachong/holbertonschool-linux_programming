@@ -32,7 +32,10 @@ int main(int argc, char **argv)
 
 	ret = parse_argv(&opxns, &fargs, &fargc, argc, argv);
 	if (ret != 0)
+	{
+		free(opxns);
 		return (ret);
+	}
 
 	/* printf("\nDEBUG opxns:\nftparams: %i\nfinfo : %i\npformat: %i\n\n", */
 	/*        opxns->ftparams, opxns->finfo, opxns->pformat); */
@@ -49,8 +52,11 @@ int main(int argc, char **argv)
 		retnw = hls(farg->str, opxns);
 		ret = (retnw > ret) ? retnw:ret;
 	}
-	/* TODO: free opxns, fargs.. farg? */
-	/* free(opxns); */
+	/* TODO: free opxns, fargs.. does it matter if this is all the way back 
+	   in main?
+	 */
+	free(opxns);
+	free_list(fargs);
 
 	return (ret);
 }
