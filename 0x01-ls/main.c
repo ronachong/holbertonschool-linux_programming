@@ -41,9 +41,9 @@ int main(int argc, char **argv)
 	/*        opxns->ftparams, opxns->finfo, opxns->pformat); */
 
 	if (fargc == 0)
-		return (hls(".", opxns));
+		ret = (hls(".", opxns));
 	if (fargc == 1)
-		return (hls(fargs->str, opxns));
+		ret = (hls(fargs->str, opxns));
 	for (i = 0, farg = fargs, ret = 0; i < fargc; i++, farg = farg->next)
 	{
 		if (i > 0)
