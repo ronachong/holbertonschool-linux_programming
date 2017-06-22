@@ -19,6 +19,8 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	finfo_t *finfo;
 	vfinfo_t *vfinfo;
 
+	printf("DB: - hls\n");
+
 	fpaths = NULL;
 	finfo = NULL;
 	vfinfo = NULL;
@@ -35,15 +37,15 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	case 1:
 		get_finfo(&finfo, dpath, &fpaths);
 		print_finfo(finfo, opxns->pformat);
-                /* TODO: free finfo list */
+		free_finfo(finfo);
 		break;
 	case 2:
 		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder);
 		print_vfinfo(vfinfo);
-		/* TODO: free vfinfo list */
+		free_vfinfo(vfinfo);
 		break;
 	}
-
         /* TODO: free fpaths linked list */
+	free_list(fpaths);
 	return (0);
 }

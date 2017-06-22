@@ -14,6 +14,8 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 	List *path;
 	struct stat stat;
 
+	printf("DB: -- get_vfinfo\n");
+
 	if (dpath[get_len(dpath) - 1] != '/')
 		dpath = strconcat(dpath, "/");
 	/* TODO: free allocated dpath? */
@@ -44,6 +46,8 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 {
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
+
+	printf("DB: --- alpha_insert_in_vfinfo\n");
 
 	vfi_node = *vfinfo_dp;
 
@@ -202,4 +206,29 @@ char *get_pstrv(int mode)
 	pstr[10] = '\0';
 
        	return (pstr);
+}
+
+/**
+ * free_vfinfo - free nodes in vfinfo linked list
+ * @vfinfo: ptr to head of vfinfo linked list
+ *
+ * Return: 0 for success
+ */
+int free_vfinfo(vfinfo_t *vfinfo)
+{
+	vfinfo_t *node;
+
+	printf("DB: -- free_vfinfo\n");
+
+	while (vfinfo != NULL)
+	{
+		node = vfinfo;
+		vfinfo = node->next;
+		printf("supposedly freeing node for %s\n", node->name);
+		free(node->perm);
+		free(node);
+
+	}
+
+	return (0);
 }

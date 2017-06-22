@@ -122,3 +122,26 @@ int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize)
 	*finfo_dp = fi_node;
 	return (0);
 }
+
+/**
+ * free_finfo - free nodes in finfo linked list
+ * @vfinfo: ptr to head of finfo linked list
+ *
+ * Return: 0 for success
+ */
+int free_finfo(finfo_t *finfo)
+{
+	finfo_t *node;
+
+	printf("DB: -- free_finfo\n");
+
+	while (finfo != NULL)
+	{
+		node = finfo;
+		finfo = node->next;
+		printf("supposedly freeing node for %s\n", node->name);
+		free(node);
+	}
+
+	return (0);
+}

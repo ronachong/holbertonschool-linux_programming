@@ -49,9 +49,9 @@ int main(int argc, char **argv)
 		retnw = hls(farg->str, opxns);
 		ret = (retnw > ret) ? retnw:ret;
 	}
-	/* TODO: free fargs */
+	/* TODO: free opxns, fargs.. farg? */
+	/* free(opxns); */
 
-	free(opxns);
 	return (ret);
 }
 

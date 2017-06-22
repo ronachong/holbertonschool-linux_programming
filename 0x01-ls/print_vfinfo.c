@@ -13,6 +13,8 @@ int print_vfinfo(vfinfo_t *vfinfo)
 	char mtime[13];
 	int i;
 
+	printf("DB: -- print_vfinfo\n");
+
 	vfi_node = vfinfo;
 	
 	for (i = 0; i < 16; i++)
