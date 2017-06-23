@@ -77,6 +77,9 @@ typedef struct vfinfo_s
 	struct vfinfo_s *next;
 } vfinfo_t;
 
+int get_snum(char c);
+int get_nonalphn_snum(char c);
+int cmpstr_ls(char *s1, const char *s2);
 int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, char **argv);
 int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);

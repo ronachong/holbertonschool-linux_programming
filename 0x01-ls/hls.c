@@ -19,7 +19,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	finfo_t *finfo;
 	vfinfo_t *vfinfo;
 
-	printf("DB: - hls\n");
+	/* printf("DB: - hls\n"); */
 
 	fpaths = NULL;
 	finfo = NULL;

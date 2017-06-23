@@ -51,10 +51,10 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 
 	vfi_node = *vfinfo_dp;
 
-	if (vfi_node == NULL || cmpstr(fname, vfi_node->name) < 0)
+	if (vfi_node == NULL || cmpstr_ls(fname, vfi_node->name) < 0)
 		return (add_vfi_node(vfinfo_dp, fname, stat));
 
-	while (vfi_node != NULL && cmpstr(fname, vfi_node->name) > 0)
+	while (vfi_node != NULL && cmpstr_ls(fname, vfi_node->name) > 0)
 	{
 		vfi_node_prev = vfi_node;
 		vfi_node=vfi_node->next;
@@ -93,7 +93,7 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 
 	while (vfi_node->size >= stat.st_size)
 	{
-		if (vfi_node->size == stat.st_size && cmpstr(fname, vfi_node->name) < 0)
+		if (vfi_node->size == stat.st_size && cmpstr_ls(fname, vfi_node->name) < 0)
 			break;
 		vfi_node_prev = vfi_node;
 		if (vfi_node->next == NULL)

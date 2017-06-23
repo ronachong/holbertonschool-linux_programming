@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "list.h"
+#include "hls-components.h"
 
 /**
  * alpha_insert_in_list - insert a node in an alphabetically sorted link list
@@ -12,7 +13,7 @@ int alpha_insert_in_list(List **list, char *content)
 	int i;
 	List *ptr_to_node;
 
-	printf("DB: -- alpha_insert_in_list\n");
+	/* printf("DB: -- alpha_insert_in_list\n"); */
 
 	i = 0;
 	ptr_to_node = *list;
@@ -20,7 +21,7 @@ int alpha_insert_in_list(List **list, char *content)
 	if (ptr_to_node == NULL)
 		return (add_node(list, content));
 
-	while (ptr_to_node != NULL && cmpstr(content, ptr_to_node->str) > 0)
+	while (ptr_to_node != NULL && cmpstr_ls(content, ptr_to_node->str) > 0)
 	{
 		ptr_to_node=ptr_to_node->next;
 		i++;
