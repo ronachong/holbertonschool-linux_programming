@@ -42,15 +42,18 @@ int main(int argc, char **argv)
 
 	if (fargc == 0)
 		ret = (hls(".", opxns));
-	if (fargc == 1)
+	else if (fargc == 1)
 		ret = (hls(fargs->str, opxns));
-	for (i = 0, farg = fargs, ret = 0; i < fargc; i++, farg = farg->next)
+	else
 	{
-		if (i > 0)
-			putchar('\n');
-		printf("%s:\n", farg->str);
-		retnw = hls(farg->str, opxns);
-		ret = (retnw > ret) ? retnw:ret;
+		for (i = 0, farg = fargs, ret = 0; i < fargc; i++, farg = farg->next)
+		{
+			if (i > 0)
+				putchar('\n');
+			printf("%s:\n", farg->str);
+			retnw = hls(farg->str, opxns);
+			ret = (retnw > ret) ? retnw:ret;
+		}
 	}
 	/* TODO: free opxns, fargs.. does it matter if this is all the way back 
 	   in main?
