@@ -25,11 +25,25 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	fpaths = NULL;
 	finfo = NULL;
 	vfinfo = NULL;
+	err = NULL;
 
 	dstrm = opendir(dpath);
 	if (dstrm == NULL)
 	{
-		err = strconcat("hls: cannot access ", dpath);
+		switch (errno)
+		{
+			/* TODO: add cases for EBADF, EMFILE, ENFILE & ENOMEN?
+			 */
+		case EACCES:
+			err = strconcat("hls: ", dpath);
+			break;
+		case ENOENT:
+			err = strconcat("hls: cannot access ", dpath);
+			break;
+		case ENOTDIR:
+			err = strconcat("this should be handled diff.", dpath);
+			break;
+		}
 		perror(err);
 		return (2);
 	}
