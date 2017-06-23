@@ -18,6 +18,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	List *fpaths;
 	finfo_t *finfo;
 	vfinfo_t *vfinfo;
+	char *err;
 
 	/* printf("DB: - hls\n"); */
 
@@ -26,6 +27,13 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	vfinfo = NULL;
 
 	dstrm = opendir(dpath);
+	if (dstrm == NULL)
+	{
+		err = strconcat("hls: cannot access ", dpath);
+		perror(err);
+		return (2);
+	}
+
 	get_fpaths(&fpaths, dstrm, opxns->ftparams);
 	closedir(dstrm);
 
