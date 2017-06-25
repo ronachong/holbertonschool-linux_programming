@@ -50,7 +50,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 		}
 	}
 
-	get_fpaths(&fpaths, dstrm, opxns->ftparams, opxns->fquery);
+	get_fpaths(&fpaths, dstrm, opxns->ftparams, opxns->fquery, opxns->forder);
 	closedir(dstrm);
 
 	switch (opxns->finfo)
@@ -59,7 +59,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 		print_fnames(fpaths, opxns->pformat);
 		break;
 	case 1:
-		get_finfo(&finfo, dpath, &fpaths);
+		get_finfo(&finfo, dpath, &fpaths, opxns->forder);
 		print_finfo(finfo, opxns->pformat);
 		free_finfo(finfo);
 		break;

@@ -13,7 +13,7 @@
  *
  * Return: 0 for success, 1 for invalid fpaths
  */
-int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
+int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery, int forder)
 {
 	struct dirent *ent;
 
@@ -49,7 +49,8 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
                         /* add default/error case for non 0-2 code */
 			}
 		}
-		alpha_insert_in_list(fpaths_dp, ent->d_name);
+		(forder == 1) ? alpha_insert_in_list(fpaths_dp, ent->d_name):
+			ralpha_insert_in_list(fpaths_dp, ent->d_name);
 	}
 	return (0);
 }

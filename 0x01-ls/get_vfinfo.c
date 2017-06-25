@@ -15,7 +15,8 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 	char *stpath;
 	struct stat stat;
 
-	/* printf("DB: -- get_vfinfo\n"); */
+	printf("DB: -- get_vfinfo\n");
+	printf("forder is %i\n", forder);
 
 	if (fquery != NULL)
 		dpath = "";
@@ -31,10 +32,21 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 		/* TODO: potentially optimize to eliminate unnecessary
 		   if checks
 		*/
-		if (forder == 1)
+		switch (forder)
+		{
+		case 1:
 			alpha_insert_in_vfinfo(vfinfo_dp, path->str, stat);
-		else if (forder == 2)
+			break;
+		case -1:
+			ralpha_insert_in_vfinfo(vfinfo_dp, path->str, stat);
+			break;
+		case 2:
 			size_insert_in_vfinfo(vfinfo_dp, path->str, stat);
+			break;
+		case -2:
+			rsize_insert_in_vfinfo(vfinfo_dp, path->str, stat);
+			break;
+		}
 	}
 	free(dpath);
 	return (0);
@@ -74,6 +86,40 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 }
 
 /**
+ * ralpha_insert_in_vfinfo - insert new node in reverse sorted vfinfo list by
+ * name of file
+ * @vfinfo_dp: ptr to ptr to head of vfinfo linked list
+ * @fname: file name to store in new node
+ * @stat: stat buffer containing file details to store in new node
+ *
+ * Return: 0 for success, 2 for malloc failure
+ */
+int ralpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
+{
+	vfinfo_t *vfi_node;
+	vfinfo_t *vfi_node_prev;
+
+	/* printf("DB: --- alpha_insert_in_vfinfo\n"); */
+
+	vfi_node = *vfinfo_dp;
+
+	if (vfi_node == NULL || fname_precedes(fname, vfi_node->name) == 0)
+		return (add_vfi_node(vfinfo_dp, fname, stat));
+
+	while (vfi_node != NULL)
+	{
+		if (fname_precedes(fname, vfi_node->name) == 0)
+			break;					 
+		vfi_node_prev = vfi_node;
+		vfi_node=vfi_node->next;
+	}
+
+	insert_vfi_node(vfi_node_prev, fname, stat);
+
+	return (0);
+}
+
+/**
  * size_insert_in_vfinfo - insert new node in vfinfo linked list by size of
  * file first, then name
  * @vfinfo_dp: ptr to ptr to head of vfinfo linked list
@@ -92,7 +138,9 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	if (vfi_node == NULL)
 		return (add_vfi_node(vfinfo_dp, fname, stat));
 
-	if (vfi_node->size < stat.st_size)
+	if (vfi_node->size < stat.st_size ||
+	    (vfi_node->size == stat.st_size &&
+	     fname_precedes(fname, vfi_node->name)))
 	{
 		add_vfi_node(vfinfo_dp, fname, stat);
 		(*vfinfo_dp)->next = vfi_node;
@@ -103,6 +151,44 @@ int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	{
 		if (vfi_node->size == stat.st_size && fname_precedes(fname, vfi_node->name))
 			break;
+		vfi_node_prev = vfi_node;
+		if (vfi_node->next == NULL)
+			break;
+		vfi_node = vfi_node->next;
+	}
+	insert_vfi_node(vfi_node_prev, fname, stat);
+
+	return (0);
+}
+
+/**
+ * size_insert_in_vfinfo - insert new node in vfinfo linked list by size of
+ * file first, then name
+ * @vfinfo_dp: ptr to ptr to head of vfinfo linked list
+ * @fname: file name to store in new node
+ * @stat: stat buffer containing file details to store in new node
+ *
+ * Return: 0 for success, 2 for malloc failure
+ */
+int rsize_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
+{
+	vfinfo_t *vfi_node;
+	vfinfo_t *vfi_node_prev;
+
+	vfi_node = *vfinfo_dp;
+
+	if (vfi_node == NULL)
+		return (add_vfi_node(vfinfo_dp, fname, stat));
+
+	if (vfi_node->size > stat.st_size)
+	{
+		add_vfi_node(vfinfo_dp, fname, stat);
+		(*vfinfo_dp)->next = vfi_node;
+		return (0);
+	}
+
+	while (vfi_node->size <= stat.st_size)
+	{
 		vfi_node_prev = vfi_node;
 		if (vfi_node->next == NULL)
 			break;

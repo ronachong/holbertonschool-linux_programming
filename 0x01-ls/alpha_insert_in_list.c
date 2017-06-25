@@ -86,6 +86,40 @@ int alpha_insert_in_list(List **list, char *content)
 }
 
 /**
+ * ralpha_insert_in_list - insert a node in a reverse alphabetically sorted
+ * link list
+ * @list: pointer to pointer to first node in linked list
+ * @content: string content for node to insert
+ * Return: 0 for success, 2 for malloc error
+ */
+int ralpha_insert_in_list(List **list, char *content)
+{
+	int i;
+	List *ptr_to_node;
+	/* char *fname1; */
+	/* char *fname2; */
+		
+
+	/* printf("DB: -- ralpha_insert_in_list\n"); */
+
+	i = 0;
+	ptr_to_node = *list;
+
+	if (ptr_to_node == NULL)
+		return (add_node(list, content));
+
+	while (ptr_to_node != NULL)
+	{
+		if (fname_precedes(content, ptr_to_node->str) == 0)
+			break;					 
+		ptr_to_node=ptr_to_node->next;
+		i++;
+	}
+
+	return (insert_in_list(list, content, i));
+}
+
+/**
  * cmpstr - compare two strings
  * @s1: first string
  * @s2: second string

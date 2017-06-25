@@ -166,7 +166,7 @@ int get_opxns(hls_opxns_t *opxns, char *arg)
 			opxns->ftparams = 2;
 			break;
 		case 'S':
-			opxns->forder = 2;
+			opxns->forder = (opxns->forder > 0) ? 2:-2;
 			if (opxns->finfo != 2)
 				opxns->finfo = 1;
 			break;

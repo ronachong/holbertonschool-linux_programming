@@ -30,7 +30,7 @@
  *     1    alphabetically
  *    -1    reverse alphabetically
  *     2    by size desc, then alphabetically
- *    -2    by size asc, then alphabetically
+ *    -2    by size asc, then reverse alphabetically
  * @pformat: printing format for output
  *     0    use new line as separator between file names or info
  *     1    use space as separator between file names or info
@@ -91,11 +91,13 @@ int parse_argv(hls_opxns_t **opxns_dp, List **fargs_dp, int *fargc_p, int argc, 
 int initialize_opxns(hls_opxns_t **opxns_dp);
 int get_opxns(hls_opxns_t *opxns, char *arg);
 int hls(char *dpath, hls_opxns_t *opxns);
-int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery);
+int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery, int forder);
+int ralpha_insert_in_list(List **list, char *content);
 int f_is_hidden(char *fname);
 void print_fnames(List *list, int pformat);
-int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp);
+int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp, int forder);
 int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize);
+int rsize_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize);
 int fname_precedes(char *fname1, char *fname2);
 int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize);
 int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize);
@@ -103,7 +105,9 @@ int print_finfo(finfo_t *finfo, int pformat);
 int free_finfo(finfo_t *finfo);
 int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp, int forder, char *fquery);
 int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
+int ralpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
+int rsize_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat);
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 vfinfo_t *get_vfi_node(char *fname, struct stat stat);

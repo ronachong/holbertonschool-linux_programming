@@ -8,7 +8,7 @@
  *
  * Return: 0 for success
  */
-int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp)
+int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp, int forder)
 {
 	List *path;
 	struct stat stat;
@@ -21,8 +21,8 @@ int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp)
 	{
 		/* query lstat for file size */
 		lstat(strconcat(dpath, path->str), &stat);
-		/* printf("DB: %s: size is %i\n", path->str, (int) stat.st_size); */
-		size_insert_in_finfo(finfo_dp, path->str, stat.st_size);
+		(forder == 2) ? size_insert_in_finfo(finfo_dp, path->str, stat.st_size):
+			rsize_insert_in_finfo(finfo_dp, path->str, stat.st_size);
 	}
 	return (0);
 }
@@ -38,17 +38,19 @@ int get_finfo(finfo_t **finfo_dp, char *dpath, List **fpaths_dp)
  */
 int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 {
-	/* int i; */
 	finfo_t *fi_node;
 	finfo_t *fi_node_prev;
 
-	/* i = 0; */
+	/* printf("DB: size_insert_in_finfo\n"); */
+
 	fi_node = *finfo_dp;
+	fi_node_prev = NULL;
 
 	if (fi_node == NULL)
 		return (add_fi_node(finfo_dp, fname, fsize));
 
-	if (fi_node->size < fsize)
+	if (fi_node->size < fsize ||
+	    (fi_node->size == fsize && fname_precedes(fname, fi_node->name)))
 	{
 		add_fi_node(finfo_dp, fname, fsize);
 		(*finfo_dp)->next = fi_node;
@@ -57,8 +59,52 @@ int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 
 	while (fi_node->size >= fsize)
 	{
-		if (fi_node->size == fsize && fname_precedes(fname, fi_node->name))
+		if (fi_node->size == fsize &&
+		    fname_precedes(fname, fi_node->name))
 			break;
+		fi_node_prev = fi_node;
+		if (fi_node->next == NULL)
+			break;
+		fi_node = fi_node->next;
+	}
+	insert_fi_node(fi_node_prev, fname, fsize);
+
+	return (0);
+}
+
+/**
+ * rsize_insert_in_finfo - insert new node in finfo linked list by size of file
+ * @finfo_dp: ptr to ptr to head of finfo linked list
+ * @fname: file name to store in new node
+ * @fsize: file size to store in new node
+ *
+ * Return: 0 for success, (tbi - 2 for malloc failure)
+ * Description: finfo linked list is a linked list of file name and file size
+ * already sorted by name.
+ */
+int rsize_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
+{
+	finfo_t *fi_node;
+	finfo_t *fi_node_prev;
+
+	fi_node = *finfo_dp;
+
+	if (fi_node == NULL)
+		return (add_fi_node(finfo_dp, fname, fsize));
+
+	/* TOCHECK: does this fxn need alphasort logic if list is
+	   already sorted? if not, why does size_insert_in need it?
+	*/
+
+	if (fi_node->size > fsize)
+	{
+		add_fi_node(finfo_dp, fname, fsize);
+		(*finfo_dp)->next = fi_node;
+		return (0);
+	}
+
+	while (fi_node->size <= fsize)
+	{
 		fi_node_prev = fi_node;
 		if (fi_node->next == NULL)
 			break;
