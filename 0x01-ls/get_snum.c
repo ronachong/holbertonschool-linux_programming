@@ -91,8 +91,8 @@ int get_nonalphn_snum(char c)
 	/* might be good to init this elsewhere
 	   to avoid reinitializing every time?
 	*/
-	chars = "`^~<=>| _,;:!?'\"()[]{}@$*\\&#%+";
-	for (i = 0; i < 30; i++)
+	chars = "`^~<=>| _,;:!?.'\"()[]{}@$*\\&#%+";
+	for (i = 0; i < 31; i++)
 	{
 		if (c == chars[i])
 			return (i + 1);

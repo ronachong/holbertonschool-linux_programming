@@ -57,7 +57,7 @@ int size_insert_in_finfo(finfo_t **finfo_dp, char *fname, int fsize)
 
 	while (fi_node->size >= fsize)
 	{
-		if (fi_node->size == fsize && cmpstr_ls(fname, fi_node->name) < 0)
+		if (fi_node->size == fsize && fname_precedes(fname, fi_node->name))
 			break;
 		fi_node_prev = fi_node;
 		if (fi_node->next == NULL)
@@ -133,13 +133,12 @@ int free_finfo(finfo_t *finfo)
 {
 	finfo_t *node;
 
-	printf("DB: -- free_finfo\n");
+	/* printf("DB: -- free_finfo\n"); */
 
 	while (finfo != NULL)
 	{
 		node = finfo;
 		finfo = node->next;
-		printf("supposedly freeing node for %s\n", node->name);
 		free(node);
 	}
 
