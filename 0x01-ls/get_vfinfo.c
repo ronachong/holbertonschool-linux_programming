@@ -15,8 +15,8 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 	char *stpath;
 	struct stat stat;
 
-	printf("DB: -- get_vfinfo\n");
-	printf("forder is %i\n", forder);
+	/* printf("DB: -- get_vfinfo\n"); */
+	/* printf("forder is %i\n", forder); */
 
 	if (fquery != NULL)
 		dpath = "";
