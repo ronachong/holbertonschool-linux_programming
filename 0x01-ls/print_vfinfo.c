@@ -19,18 +19,6 @@ int print_vfinfo(vfinfo_t *vfinfo, int max)
 	char *padding;
 
 	/* printf("DB: -- print_vfinfo\n"); */
-	vfi_node = vfinfo;
-	
-	for (i = 0; i < 16; i++)
-	{
-		while (i < 4)
-		{
-			i++;
-			continue;
-		}
-		mtime[i - 4] = (vfi_node->mtime)[i];
-	}
-	mtime[12] = '\0';
 
 	j = 0;
 	while (max > 9)
@@ -39,6 +27,7 @@ int print_vfinfo(vfinfo_t *vfinfo, int max)
 		j++;
 	}
 
+	vfi_node = vfinfo;
 	while (vfi_node != NULL)
 	{
 		for (size = vfi_node->size, k = 0;
@@ -57,6 +46,17 @@ int print_vfinfo(vfinfo_t *vfinfo, int max)
 		else
 			padding = "";
 
+		for (i = 0; i < 16; i++)
+		{
+			while (i < 4)
+			{
+				i++;
+				continue;
+			}
+			mtime[i - 4] = (vfi_node->mtime)[i];
+		}
+		mtime[12] = '\0';
+
 		printf("%s %i %s %s %s%i %s %s\n",
 		       vfi_node->perm,
 		       vfi_node->nlink,
@@ -68,7 +68,8 @@ int print_vfinfo(vfinfo_t *vfinfo, int max)
 		       vfi_node->name
 			);
 		vfi_node = vfi_node->next;
-
+		if (sdiff > 0)
+			free(padding);
 	}
 
 	return (0);

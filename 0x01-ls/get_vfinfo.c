@@ -269,7 +269,7 @@ vfinfo_t *get_vfi_node(char *fname, struct stat stat)
 	vfi_node->nlink = stat.st_nlink;
 	vfi_node->uid = getpwuid(stat.st_uid)->pw_name; /* TODO: handle undef'd */
 	vfi_node->gid = getgrgid(stat.st_gid)->gr_name; /* TODO: handle undef'd */
-	vfi_node->mtime = ctime(&(stat.st_mtime));
+	vfi_node->mtime = copy_string(ctime(&(stat.st_mtime)));
 	vfi_node->next = NULL;
 
 	return (vfi_node);
@@ -321,6 +321,7 @@ int free_vfinfo(vfinfo_t *vfinfo)
 		node = vfinfo;
 		vfinfo = node->next;
 		free(node->perm);
+		free(node->mtime);
 		free(node);
 
 	}
