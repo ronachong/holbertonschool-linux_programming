@@ -9,16 +9,18 @@
  * Return: 0 for success
  */
 int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
-	       int forder)
+	       int forder, char *fquery)
 {
 	List *path;
 	struct stat stat;
 
-	printf("DB: -- get_vfinfo\n");
+	/* printf("DB: -- get_vfinfo\n"); */
 
-	if (dpath[get_len(dpath) - 1] != '/')
-		dpath = strconcat(dpath, "/");
-	/* TODO: free allocated dpath? */
+	if (fquery != NULL)
+		dpath = "";
+
+ 	else if (dpath[get_len(dpath) - 1] != '/')
+		dpath = strconcat(dpath, "/"); /* was dpath malloced? */
 
 	for (path = *fpaths_dp; path != NULL; path = path->next)
 	{
@@ -47,7 +49,7 @@ int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat)
 	vfinfo_t *vfi_node;
 	vfinfo_t *vfi_node_prev;
 
-	printf("DB: --- alpha_insert_in_vfinfo\n");
+	/* printf("DB: --- alpha_insert_in_vfinfo\n"); */
 
 	vfi_node = *vfinfo_dp;
 
@@ -218,13 +220,12 @@ int free_vfinfo(vfinfo_t *vfinfo)
 {
 	vfinfo_t *node;
 
-	printf("DB: -- free_vfinfo\n");
+	/* printf("DB: -- free_vfinfo\n"); */
 
 	while (vfinfo != NULL)
 	{
 		node = vfinfo;
 		vfinfo = node->next;
-		printf("supposedly freeing node for %s\n", node->name);
 		free(node->perm);
 		free(node);
 

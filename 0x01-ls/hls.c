@@ -36,19 +36,21 @@ int hls(char *dpath, hls_opxns_t *opxns)
 			 */
 		case EACCES:
 			err = strconcat("hls: ", dpath);
-			break;
+			perror(err);
+			closedir(dstrm);
+			return (2);
 		case ENOENT:
 			err = strconcat("hls: cannot access ", dpath);
-			break;
+			perror(err);
+			closedir(dstrm);
+			return (2);
 		case ENOTDIR:
-			err = strconcat("this should be handled diff.", dpath);
+			opxns->fquery = dpath;
 			break;
 		}
-		perror(err);
-		return (2);
 	}
 
-	get_fpaths(&fpaths, dstrm, opxns->ftparams);
+	get_fpaths(&fpaths, dstrm, opxns->ftparams, opxns->fquery);
 	closedir(dstrm);
 
 	switch (opxns->finfo)
@@ -62,7 +64,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 		free_finfo(finfo);
 		break;
 	case 2:
-		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder);
+		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder, opxns->fquery);
 		print_vfinfo(vfinfo);
 		free_vfinfo(vfinfo);
 		break;

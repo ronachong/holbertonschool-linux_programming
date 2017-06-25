@@ -132,6 +132,7 @@ int initialize_opxns(hls_opxns_t **opxns_dp)
 		return (2);
 	}
 
+	(*opxns_dp)->fquery = 0;
 	(*opxns_dp)->ftparams = 0;
 	(*opxns_dp)->finfo = 0;
 	(*opxns_dp)->forder = 1;

@@ -13,12 +13,21 @@
  *
  * Return: 0 for success, 1 for invalid fpaths
  */
-int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams)
+int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
 {
 	struct dirent *ent;
 
 	if (*fpaths_dp != NULL)
+	{
+		printf("Programming error: fpaths_dp not null\n.");
 		return (1);
+	}
+
+	if (fquery != NULL)
+	{
+		alpha_insert_in_list(fpaths_dp, fquery);
+		return (0);
+	}
 
 	while ((ent = readdir(dstrm)) != NULL)
 	{

@@ -1,10 +1,17 @@
 #include "str.h"
+#include "hls-components.h"
 
 char *strconcat(char *s1, char *s2)
 {
 	char *s3;
 	int i;
 	int j;
+
+	if (cmpstr(s1, "") == 0)
+	    return (s2);
+
+	if (cmpstr(s2, "") == 0)
+	    return (s1);
 
 	s3 = malloc(get_len(s1) + get_len(s2));
 
