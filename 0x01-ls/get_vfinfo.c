@@ -12,6 +12,7 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 	       int forder, char *fquery)
 {
 	List *path;
+	char *stpath;
 	struct stat stat;
 
 	/* printf("DB: -- get_vfinfo\n"); */
@@ -20,11 +21,13 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 		dpath = "";
 
  	else if (dpath[get_len(dpath) - 1] != '/')
-		dpath = strconcat(dpath, "/"); /* was dpath malloced? */
+		dpath = strconcat(dpath, "/");
 
 	for (path = *fpaths_dp; path != NULL; path = path->next)
 	{
-		lstat(strconcat(dpath, path->str), &stat);
+		stpath = strconcat(dpath, path->str);
+		lstat(stpath, &stat);
+		free(stpath);
 		/* TODO: potentially optimize to eliminate unnecessary
 		   if checks
 		*/
@@ -33,6 +36,7 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 		else if (forder == 2)
 			size_insert_in_vfinfo(vfinfo_dp, path->str, stat);
 	}
+	free(dpath);
 	return (0);
 }
 
