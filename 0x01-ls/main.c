@@ -55,9 +55,6 @@ int main(int argc, char **argv)
 			ret = (retnw > ret) ? retnw:ret;
 		}
 	}
-	/* TODO: free opxns, fargs.. does it matter if this is all the way back 
-	   in main?
-	 */
 	free(opxns);
 	free_list(fargs);
 

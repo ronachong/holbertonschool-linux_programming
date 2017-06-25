@@ -19,6 +19,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	finfo_t *finfo;
 	vfinfo_t *vfinfo;
 	char *err;
+	int max;
 
 	/* printf("DB: - hls\n"); */
 
@@ -26,6 +27,7 @@ int hls(char *dpath, hls_opxns_t *opxns)
 	finfo = NULL;
 	vfinfo = NULL;
 	err = NULL;
+	max = 0;
 
 	dstrm = opendir(dpath);
 	if (dstrm == NULL)
@@ -64,8 +66,8 @@ int hls(char *dpath, hls_opxns_t *opxns)
 		free_finfo(finfo);
 		break;
 	case 2:
-		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder, opxns->fquery);
-		print_vfinfo(vfinfo);
+		get_vfinfo(&vfinfo, dpath, &fpaths, opxns->forder, opxns->fquery, &max);
+		print_vfinfo(vfinfo, max);
 		free_vfinfo(vfinfo);
 		break;
 	}

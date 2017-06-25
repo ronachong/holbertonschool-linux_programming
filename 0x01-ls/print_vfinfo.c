@@ -7,14 +7,18 @@
  *
  * Return: 0 for success
  */
-int print_vfinfo(vfinfo_t *vfinfo)
+int print_vfinfo(vfinfo_t *vfinfo, int max)
 {
 	vfinfo_t *vfi_node;
 	char mtime[13];
 	int i;
+	int j;
+	int size;
+	int sdiff;
+	int k;
+	char *padding;
 
 	/* printf("DB: -- print_vfinfo\n"); */
-
 	vfi_node = vfinfo;
 	
 	for (i = 0; i < 16; i++)
@@ -28,13 +32,37 @@ int print_vfinfo(vfinfo_t *vfinfo)
 	}
 	mtime[12] = '\0';
 
+	j = 0;
+	while (max > 9)
+	{
+		max /= 10;
+		j++;
+	}
+
 	while (vfi_node != NULL)
 	{
-		printf("%s %i %s %s %i %s %s\n",
+		for (size = vfi_node->size, k = 0;
+		     size > 9;
+		     k++)
+			size /= 10;
+
+		sdiff = j - k;
+		if (sdiff > 0)
+		{
+			padding = malloc(sdiff + 1);
+			for (i = 0; i < sdiff; i++)
+				padding[i] = ' ';
+			padding[sdiff] = '\0';
+		}
+		else
+			padding = "";
+
+		printf("%s %i %s %s %s%i %s %s\n",
 		       vfi_node->perm,
 		       vfi_node->nlink,
 		       vfi_node->uid,
 		       vfi_node->gid,
+		       padding,
 		       vfi_node->size,
 		       mtime,
 		       vfi_node->name

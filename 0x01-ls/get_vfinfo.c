@@ -9,7 +9,7 @@
  * Return: 0 for success
  */
 int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
-	       int forder, char *fquery)
+	       int forder, char *fquery, int *max)
 {
 	List *path;
 	char *stpath;
@@ -29,6 +29,8 @@ int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp,
 		stpath = strconcat(dpath, path->str);
 		lstat(stpath, &stat);
 		free(stpath);
+		if (stat.st_size > *max)
+			*max = stat.st_size;
 		/* TODO: potentially optimize to eliminate unnecessary
 		   if checks
 		*/

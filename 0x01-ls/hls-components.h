@@ -103,7 +103,7 @@ int insert_fi_node(finfo_t *fi_node_prev, char *fname, int fsize);
 int add_fi_node(finfo_t **finfo_dp, char *fname, int fsize);
 int print_finfo(finfo_t *finfo, int pformat);
 int free_finfo(finfo_t *finfo);
-int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp, int forder, char *fquery);
+int get_vfinfo(vfinfo_t **vfinfo_dp, char *dpath, List **fpaths_dp, int forder, char *fquery, int *max);
 int alpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 int ralpha_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 int size_insert_in_vfinfo(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
@@ -112,7 +112,7 @@ int insert_vfi_node(vfinfo_t *vfi_node_prev, char *fname, struct stat stat);
 int add_vfi_node(vfinfo_t **vfinfo_dp, char *fname, struct stat stat);
 vfinfo_t *get_vfi_node(char *fname, struct stat stat);
 char *get_pstrv(int mode);
-int print_vfinfo(vfinfo_t *vfinfo);
+int print_vfinfo(vfinfo_t *vfinfo, int max);
 int free_vfinfo(vfinfo_t *vfinfo);
 
 #endif
