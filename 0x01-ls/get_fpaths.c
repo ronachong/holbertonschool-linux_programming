@@ -31,7 +31,6 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
 
 	while ((ent = readdir(dstrm)) != NULL)
 	{
-		/* printf("\nDEBUG: for %s:\n", ent->d_name); */
 		if (ent->d_name[0] == '.')
 		{
 			switch(ftparams)
@@ -39,7 +38,8 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
 			case 0:
 				continue;
 			case 1:
-				if (ent->d_name[1] == '\0' || (ent->d_name[1] == '.' && ent->d_name[2] == '\0'))
+				if (ent->d_name[1] == '\0' ||
+				    (ent->d_name[1] == '.' && ent->d_name[2] == '\0'))
 						continue;
 				else
 					break;
@@ -49,7 +49,6 @@ int get_fpaths(List **fpaths_dp, DIR *dstrm, int ftparams, char *fquery)
                         /* add default/error case for non 0-2 code */
 			}
 		}
-		/* printf("DEBUG: running alpha_insert\n"); */
 		alpha_insert_in_list(fpaths_dp, ent->d_name);
 	}
 	return (0);
