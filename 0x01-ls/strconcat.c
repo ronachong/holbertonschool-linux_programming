@@ -13,7 +13,7 @@ char *strconcat(char *s1, char *s2)
 	if (cmpstr(s2, "") == 0)
 	    return (s1);
 
-	s3 = malloc(get_len(s1) + get_len(s2));
+	s3 = malloc(get_len(s1) + get_len(s2) - 1);
 
 	/* if malloc fails, return NULL */
 	if (s3 == NULL)
@@ -35,5 +35,5 @@ int get_len(char *s)
 	int i;
 	for (i = 0; s[i] != '\0'; i++)
 	{}
-	return (i);
+	return (i + 1);
 }
