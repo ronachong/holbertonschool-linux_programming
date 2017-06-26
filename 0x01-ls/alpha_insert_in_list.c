@@ -10,10 +10,16 @@
  */
 int f_is_hidden(char *fname)
 {
-	if (fname[0] == '.' &&
-	    cmpstr(fname, ".") != 0 &&
-	    cmpstr(fname, "..") != 0)
-		return (1);
+	int i;
+
+	if (fname[0] != '.')
+		return (0);
+
+	for (i = 1; fname[i] != '\0'; i++)
+	{
+		if (fname[i] != '.')
+			return (1);
+	}
 	return (0);
 
 }
@@ -27,29 +33,19 @@ int f_is_hidden(char *fname)
  */
 int fname_precedes(char *fname1, char *fname2)
 {
-	int ret;
-
 	if (f_is_hidden(fname1))
 	{
-		if (f_is_hidden(fname2))
-		{
-			while (fname1[0] == '.')
-				fname1++;
-			while (fname2[0] == '.')
-				fname2++;
-			ret = (cmpstr_ls(fname1, fname2) < 0) ? 1:0;
-		}
-		else
-			ret = 0;
+		while (fname1[0] == '.')
+			fname1++;
 	}
-	else
+
+	if (f_is_hidden(fname2))
 	{
-		if (f_is_hidden(fname2))
-			ret = 1;
-		else
-			ret = (cmpstr_ls(fname1, fname2) < 0) ? 1:0;
+		while (fname2[0] == '.')
+			fname2++;
 	}
-	return (ret);
+
+	return (cmpstr_ls(fname1, fname2) < 0) ? 1:0;
 }
 
 /**
