@@ -67,9 +67,9 @@ size_t update_str(char **str_addr, char buf[], size_t bytes_rd)
 
 /**
  * expand_str: replaces the given array with another array twice the size
- * @buf_addr: pointer to the array being replaced
- * @b_len: current number of bytes allocated to array
- * @l_len: number of chars/bytes to copy to the new array
+ * @str_addr: pointer to the array being replaced
+ * @str_len: current number of bytes allocated to array
+ * @lsize: "line size" - number of chars/bytes to copy to the new array
  *
  * Return:
  */
