@@ -38,13 +38,14 @@ char *_getline(const int fd)
  */
 size_t update_str(char **str_addr, char buf[], size_t bytes_rd)
 {
-	static size_t lsize = 0;
-	static size_t wsize = 0;
-	static size_t str_size = READ_SIZE;
+	static size_t lsize = 0; /* chars written to str */
+	static size_t str_size = READ_SIZE; /* size of str array */
+	char *w_addr; /* address to start assigning chars in str */
 	unsigned int i;
 
 	if (bytes_rd == 0)
 		return (lsize);
+       
 
 	for (i = 0; i < bytes_rd; i++)
 	{
@@ -55,12 +56,12 @@ size_t update_str(char **str_addr, char buf[], size_t bytes_rd)
 		}
 	}
 
-	wsize = lsize;
+	w_addr = *str_addr + lsize;
 	lsize += i + 1;
+
 	if (lsize > str_size)
 		str_size = expand_str(str_addr, str_size, lsize);
-
-	strncpy(*str_addr + wsize, buf, i + 1);
+	strncpy(w_addr, buf, i + 1);
 	return (lsize);
 }
 
