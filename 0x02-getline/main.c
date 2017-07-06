@@ -23,16 +23,16 @@ int main(void)
 	/* 	test_read(fd); */
 
 	/* TEST 2 */
-	line = _getline(fd);
-	printf("%s\n", line);
-	free(line);
+	/* line = _getline(fd); */
+	/* printf("%s\n", line); */
+	/* free(line); */
 
 	/* TEST 3 */
-	/* while ((line = _getline(fd))) */
-	/* { */
-	/* 	printf("%s\n", line); */
-	/* 	free(line); */
-	/* } */
+	while ((line = _getline(fd)))
+	{
+		printf("%s\n", line);
+		free(line);
+	}
 
 	close(fd);
 	return (0);

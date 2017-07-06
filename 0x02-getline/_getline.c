@@ -28,28 +28,27 @@ char *_getline(const int fd)
 	char *str;
 	char *ret;
 
-	int i = 0;
 	str = malloc(READ_SIZE);
 
 	do {
 		if (r_addr == NULL)
-		{
-/* buffer never used or exhausted, overwrite */
+		{ /* buffer fully parsed or never used, overwrite */
 			/* TODO: handle read err */
 			bytes_rd = read(fd, buf, READ_SIZE);
+			/* printf("buf is %s\n", buf); */
 			r_addr = buf;
 		}
 
 		strc = update_str(&str, r_addr, strc, bytes_rd);
 		r_addr = NULL;
-		i++;
-	} while (str[strc - 1] != '\0' && i < 5);
+	} while (str[strc - 1] != '\0');
 
 	ret = malloc(strc);
 	strncpy(ret, str, strc);
 	free(str);
 
-	r_addr = (strc != READ_SIZE) ? buf + strc : NULL;
+	/* ensure read when buf has been fully parsed */
+	r_addr = (strc % READ_SIZE != 0) ? buf + (strc % READ_SIZE) : NULL;
 	strc = 0;
 	return (ret);
 }
