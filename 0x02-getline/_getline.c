@@ -1,4 +1,17 @@
 #include "_getline.h"
+#include <malloc.h>
+
+void test_read(const int fd)
+{
+	int i;
+	char buf[READ_SIZE];
+	for (i = 0; i < 5; i++)
+	{
+		read(fd, buf, READ_SIZE - 1);
+		buf[READ_SIZE - 1] = '\0';
+		printf("%i: in buffer: %s\n", i, buf);
+	}
+}
 
 /**
  * _getline: reads one entire line from a file descriptor
@@ -8,23 +21,36 @@
  */
 char *_getline(const int fd)
 {
-	size_t lsize;
-	size_t bytes_rd;
-	char buf[READ_SIZE];
+	static char *r_addr = NULL;
+	static size_t strc = 0; /* chars written to curr str */
+	static size_t bytes_rd = 0;
+	static char buf[READ_SIZE];
 	char *str;
 	char *ret;
 
+	int i = 0;
 	str = malloc(READ_SIZE);
 
 	do {
-		/* TODO: handle read err */
-		bytes_rd = read(fd, buf, READ_SIZE);
-		lsize = update_str(&str, buf, bytes_rd);
-	} while (str[lsize - 1] != '\0');
+		if (r_addr == NULL)
+		{
+/* buffer never used or exhausted, overwrite */
+			/* TODO: handle read err */
+			bytes_rd = read(fd, buf, READ_SIZE);
+			r_addr = buf;
+		}
 
-	ret = malloc(lsize);
-	strncpy(ret, str, lsize);
+		strc = update_str(&str, r_addr, strc, bytes_rd);
+		r_addr = NULL;
+		i++;
+	} while (str[strc - 1] != '\0' && i < 5);
+
+	ret = malloc(strc);
+	strncpy(ret, str, strc);
 	free(str);
+
+	r_addr = (strc != READ_SIZE) ? buf + strc : NULL;
+	strc = 0;
 	return (ret);
 }
 
@@ -36,52 +62,50 @@ char *_getline(const int fd)
  *
  * Return: "line size" - updated count of chars assigned to string
  */
-size_t update_str(char **str_addr, char buf[], size_t bytes_rd)
+size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t bytes_rd)
 {
-	static size_t lsize = 0; /* chars written to str */
 	static size_t str_size = READ_SIZE; /* size of str array */
-	char *w_addr; /* address to start assigning chars in str */
+	size_t new_strc;
 	unsigned int i;
 
 	if (bytes_rd == 0)
-		return (lsize);
+		return (strc);
        
-
 	for (i = 0; i < bytes_rd; i++)
 	{
-		if (buf[i] == '\n')
+		if (r_addr[i] == '\n')
 		{
-			buf[i] = '\0';
+			r_addr[i] = '\0';
+			i++;
 			break;
 		}
 	}
 
-	w_addr = *str_addr + lsize;
-	lsize += i + 1;
+ 	new_strc = strc + i;
+	if (new_strc > str_size)
+		str_size = expand_str(str_addr, str_size, new_strc);
 
-	if (lsize > str_size)
-		str_size = expand_str(str_addr, str_size, lsize);
-	strncpy(w_addr, buf, i + 1);
-	return (lsize);
+	strncpy(*str_addr + strc, r_addr, i);
+	return (new_strc);
 }
 
 
 /**
  * expand_str: replaces the given array with another array twice the size
  * @str_addr: pointer to the array being replaced
- * @str_len: current number of bytes allocated to array
- * @lsize: "line size" - number of chars/bytes to copy to the new array
+ * @str_size: current number of bytes allocated to array
+ * @strc: "line size" - number of chars/bytes to copy to the new array
  *
- * Return:
+ * Return: updated size of array
  */
-size_t expand_str(char **str_addr, size_t str_size, size_t lsize)
+size_t expand_str(char **str_addr, size_t str_size, size_t strc)
 {
 	char *nstr;
 
 	str_size *= 2;
 	nstr = malloc(str_size);
-	strncpy(nstr, *str_addr, lsize); /* TODO: handle err */
+	strncpy(nstr, *str_addr, strc); /* TODO: handle err */
 	free(*str_addr);
-	str_addr = &nstr;
+	*str_addr = nstr;
 	return (str_size);
 }
