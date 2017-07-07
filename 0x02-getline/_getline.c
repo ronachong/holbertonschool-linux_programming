@@ -9,9 +9,9 @@
  */
 char *_getline(const int fd)
 {
-	static char *r_addr = NULL;
-	static size_t strc = 0; /* chars written to curr str */
-	static size_t bytes_rd = 0;
+	static char *r_addr;
+	static size_t strc; /* chars written to curr str */
+	static size_t bytes_rd;
 	static char buf[READ_SIZE];
 	size_t c;
 	char *str;
