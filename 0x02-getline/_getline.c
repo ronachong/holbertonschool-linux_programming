@@ -44,7 +44,10 @@ char *_getline(const int fd)
 
 		c = c_to_copy(r_addr, bytes_rd);
 		if (c == 0)
+		{
+			free(str);
 			return (NULL);
+		}
 		strc = update_str(&str, r_addr, strc, c);
 
 		/* printf("c is %i\n", (int) c); */
