@@ -19,6 +19,14 @@ char *_getline(const int fd)
 
 	str = malloc(READ_SIZE);
 
+	if (fd == -1)
+	{
+		r_addr = NULL;
+		strc = 0;
+		bytes_rd = 0;
+		return (NULL);
+	}
+
 	do {
 		if (r_addr == NULL)
 		{ /* overwrite if buffer fully parsed or never used*/
