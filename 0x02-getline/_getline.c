@@ -2,7 +2,7 @@
 #include <malloc.h>
 
 /**
- * _getline: reads one entire line from a file descriptor
+ * _getline - reads one entire line from a file descriptor
  * @fd: file descriptor to read from
  *
  * Return: line from file
@@ -55,12 +55,11 @@ char *_getline(const int fd)
 }
 
 /**
- * c_to_copy: finds the number of chars to copy from buf
- * @str_addr: pointer to string
- * @buf: pointer to buffer containing chars
+ * c_to_copy - finds the number of chars to copy from buffer
+ * @r_addr: "read address" - pointer to buffer containing chars
  * @bytes_rd: number of bytes/chars written to buffer
  *
- * Return: updated count of chars assigned to string
+ * Return: number of chars to copy from buffer
  */
 size_t c_to_copy(char *r_addr, size_t bytes_rd)
 {
@@ -82,10 +81,11 @@ size_t c_to_copy(char *r_addr, size_t bytes_rd)
 }
 
 /**
- * update_str: copies appropriate chars from buffer to string
+ * update_str - copies appropriate chars from buffer to string
  * @str_addr: pointer to string
- * @buf: pointer to buffer containing chars
- * @bytes_rd: number of bytes/chars written to buffer
+ * @r_addr: "read address" - pointer to buffer
+ * @strc: number of chars written to string so far
+ * @i: number of chars to write to string from buffer
  *
  * Return: updated count of chars assigned to string
  */
@@ -111,10 +111,10 @@ size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t i)
 
 
 /**
- * expand_str: replaces the given array with another array twice the size
+ * expand_str - replaces the given array with another array twice the size
  * @str_addr: pointer to the array being replaced
  * @str_size: current number of bytes allocated to array
- * @strc: "line size" - number of chars/bytes to copy to the new array
+ * @strc: number of chars/bytes to copy to the new array
  *
  * Return: updated size of array
  */
