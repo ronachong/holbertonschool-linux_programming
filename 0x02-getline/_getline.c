@@ -9,6 +9,7 @@
  */
 char *_getline(const int fd)
 {
+	static int fd_prev;
 	static char *r_addr;
 	static size_t strc; /* chars written to curr str */
 	static size_t bytes_rd;
@@ -17,12 +18,15 @@ char *_getline(const int fd)
 	char *str;
 	char *ret;
 
-	if (fd == -1)
+	if (fd != fd_prev || fd == -1)
 	{
 		r_addr = NULL;
 		strc = 0;
 		bytes_rd = 0;
-		return (NULL);
+
+
+		if (fd == -1)
+			return (NULL);
 	}
 
 	str = malloc(READ_SIZE);
@@ -52,6 +56,7 @@ char *_getline(const int fd)
 	strncpy(ret, str, strc);
 	free(str);
 	strc = 0;
+	fd_prev = fd;
 
 	if (r_addr != NULL)
 	{

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define READ_SIZE 8
+#define READ_SIZE 128
 
 char *_getline(const int fd);
 size_t c_to_copy(char *r_addr, size_t bytes_rd);
