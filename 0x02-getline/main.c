@@ -29,7 +29,7 @@ int main(void)
 	/* free(line); */
 
 	/* TEST 3 */
-	while ((line = _getline(fd)) && i < 15)
+	while ((line = _getline(fd)) && i < 30)
 	{
 		printf("-----%s\n", line);
 		free(line);

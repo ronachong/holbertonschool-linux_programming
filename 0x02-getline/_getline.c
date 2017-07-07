@@ -38,27 +38,32 @@ char *_getline(const int fd)
 		{ /* buffer fully parsed or never used, overwrite */
 			/* TODO: handle read err */
 			bytes_rd = read(fd, buf, READ_SIZE);
-			/* printf("buf is %s\n", buf); */
+			/* printf("buf: %s\n", buf); */
 			r_addr = buf;
 		}
 
 		c = c_to_copy(r_addr, bytes_rd);
 		strc = update_str(&str, r_addr, strc, c);
-		r_addr = NULL;		
+
+		/* printf("c is %i\n", (int) c); */
+		if (c == bytes_rd) /* buffer fully parsed */
+			r_addr = NULL;
+
 	} while (str[strc - 1] != '\0');
 
 	ret = malloc(strc);
 	strncpy(ret, str, strc);
 	free(str);
-
-	/* ensure read of buf in next call if buf not fully parsed */
-	if (READ_SIZE - c != 0)
-	{		
-		r_addr = buf + c;
-		bytes_rd -= c;
-		/* printf("r_addr for next call is %s\n", r_addr); */
-	}
 	strc = 0;
+
+	if (r_addr != NULL)
+	{
+		r_addr = r_addr + c;
+		bytes_rd -= c;
+		/* printf("c is %i; r_addr for next call: %s\n", */
+		/*        (int) c, r_addr); */
+	}
+
 	return (ret);
 }
 
