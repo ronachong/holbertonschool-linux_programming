@@ -25,8 +25,11 @@ char *_getline(const int fd)
 	static size_t strc = 0; /* chars written to curr str */
 	static size_t bytes_rd = 0;
 	static char buf[READ_SIZE];
+	size_t c;
 	char *str;
 	char *ret;
+
+	/* printf("\nnew call\n"); */
 
 	str = malloc(READ_SIZE);
 
@@ -39,32 +42,36 @@ char *_getline(const int fd)
 			r_addr = buf;
 		}
 
-		strc = update_str(&str, r_addr, strc, bytes_rd);
-		r_addr = NULL;
+		c = c_to_copy(r_addr, strc, bytes_rd);
+		strc = update_str(&str, r_addr, strc, c);
+		r_addr = NULL;		
 	} while (str[strc - 1] != '\0');
 
 	ret = malloc(strc);
 	strncpy(ret, str, strc);
 	free(str);
 
-	/* ensure read when buf has been fully parsed */
-	r_addr = (strc % READ_SIZE != 0) ? buf + (strc % READ_SIZE) : NULL;
+	/* ensure read of buf in next call if buf not fully parsed */
+	if (READ_SIZE - c != 0)
+	{		
+		r_addr = buf + c;
+		bytes_rd -= c;
+		/* printf("r_addr for next call is %s\n", r_addr); */
+	}
 	strc = 0;
 	return (ret);
 }
 
 /**
- * update_str: copies appropriate chars from buffer to string
+ * c_to_copy: finds the number of chars to copy from buf
  * @str_addr: pointer to string
  * @buf: pointer to buffer containing chars
  * @bytes_rd: number of bytes/chars written to buffer
  *
- * Return: "line size" - updated count of chars assigned to string
+ * Return: updated count of chars assigned to string
  */
-size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t bytes_rd)
+size_t c_to_copy(char *r_addr, size_t strc, size_t bytes_rd)
 {
-	static size_t str_size = READ_SIZE; /* size of str array */
-	size_t new_strc;
 	unsigned int i;
 
 	if (bytes_rd == 0)
@@ -79,6 +86,24 @@ size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t bytes_rd)
 			break;
 		}
 	}
+	return (i);
+}
+
+/**
+ * update_str: copies appropriate chars from buffer to string
+ * @str_addr: pointer to string
+ * @buf: pointer to buffer containing chars
+ * @bytes_rd: number of bytes/chars written to buffer
+ *
+ * Return: updated count of chars assigned to string
+ */
+size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t i)
+{
+	static size_t str_size = READ_SIZE; /* size of str array */
+	size_t new_strc;
+
+	if (i == 0)
+		return (strc);
 
  	new_strc = strc + i;
 	if (new_strc > str_size)

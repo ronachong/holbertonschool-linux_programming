@@ -13,9 +13,10 @@
 int main(void)
 {
 	int fd;
-	/* int i; */
+	int i;
 	char *line;
 
+	i = 0;
 	fd = open("main.c", 0);
 
 	/* TEST 1 */
@@ -23,15 +24,16 @@ int main(void)
 	/* 	test_read(fd); */
 
 	/* TEST 2 */
-	/* line = _getline(fd); */
+ 	/* line = _getline(fd); */
 	/* printf("%s\n", line); */
 	/* free(line); */
 
 	/* TEST 3 */
-	while ((line = _getline(fd)))
+	while ((line = _getline(fd)) && i < 20)
 	{
-		printf("%s\n", line);
+		printf("-----%s\n", line);
 		free(line);
+		i++;
 	}
 
 	close(fd);
