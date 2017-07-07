@@ -31,7 +31,7 @@ int main(void)
 	/* TEST 3 */
 	while ((line = _getline(fd)) && i < 50)
 	{
-		printf("-----%s\n", line);
+		printf("%s\n", line);
 		free(line);
 		i++;
 	}

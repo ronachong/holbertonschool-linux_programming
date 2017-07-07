@@ -29,16 +29,13 @@ char *_getline(const int fd)
 	char *str;
 	char *ret;
 
-	/* printf("\nnew call\n"); */
-
 	str = malloc(READ_SIZE);
 
 	do {
 		if (r_addr == NULL)
-		{ /* buffer fully parsed or never used, overwrite */
+		{ /* overwrite if buffer fully parsed or never used*/
 			/* TODO: handle read err */
 			bytes_rd = read(fd, buf, READ_SIZE);
-			/* printf("buf: %s\n", buf); */
 			r_addr = buf;
 		}
 
@@ -50,7 +47,6 @@ char *_getline(const int fd)
 		}
 		strc = update_str(&str, r_addr, strc, c);
 
-		/* printf("c is %i\n", (int) c); */
 		if (c == bytes_rd) /* buffer fully parsed */
 			r_addr = NULL;
 
@@ -65,8 +61,6 @@ char *_getline(const int fd)
 	{
 		r_addr = r_addr + c;
 		bytes_rd -= c;
-		/* printf("c is %i; r_addr for next call: %s\n", */
-		/*        (int) c, r_addr); */
 	}
 
 	return (ret);
@@ -115,7 +109,11 @@ size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t i)
 	if (i == 0)
 		return (strc);
 
+	if (strc == 0)
+		str_size = READ_SIZE;
+
  	new_strc = strc + i;
+
 	if (new_strc > str_size)
 		str_size = expand_str(str_addr, str_size, new_strc);
 
