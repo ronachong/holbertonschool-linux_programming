@@ -1,18 +1,6 @@
 #include "_getline.h"
 #include <malloc.h>
 
-void test_read(const int fd)
-{
-	int i;
-	char buf[READ_SIZE];
-	for (i = 0; i < 5; i++)
-	{
-		read(fd, buf, READ_SIZE - 1);
-		buf[READ_SIZE - 1] = '\0';
-		printf("%i: in buffer: %s\n", i, buf);
-	}
-}
-
 /**
  * _getline: reads one entire line from a file descriptor
  * @fd: file descriptor to read from
