@@ -19,10 +19,6 @@ int main(void)
 	i = 0;
 	fd = open("main.c", 0);
 
-	/* TEST 1 */
-	/* for (i = 0; i < 5; i++) */
-	/* 	test_read(fd); */
-
 	/* TEST 2 */
  	/* line = _getline(fd); */
 	/* printf("%s\n", line); */
