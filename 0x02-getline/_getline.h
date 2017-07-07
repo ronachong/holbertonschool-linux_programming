@@ -10,7 +10,7 @@
 
 void test_read(const int fd);
 char *_getline(const int fd);
-size_t c_to_copy(char *r_addr, size_t strc, size_t bytes_rd);
+size_t c_to_copy(char *r_addr, size_t bytes_rd);
 size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t i);
 size_t expand_str(char **str_addr, size_t str_size, size_t lsize);
 

@@ -42,7 +42,7 @@ char *_getline(const int fd)
 			r_addr = buf;
 		}
 
-		c = c_to_copy(r_addr, strc, bytes_rd);
+		c = c_to_copy(r_addr, bytes_rd);
 		strc = update_str(&str, r_addr, strc, c);
 		r_addr = NULL;		
 	} while (str[strc - 1] != '\0');
@@ -70,12 +70,12 @@ char *_getline(const int fd)
  *
  * Return: updated count of chars assigned to string
  */
-size_t c_to_copy(char *r_addr, size_t strc, size_t bytes_rd)
+size_t c_to_copy(char *r_addr, size_t bytes_rd)
 {
 	unsigned int i;
 
 	if (bytes_rd == 0)
-		return (strc);
+		return (0);
        
 	for (i = 0; i < bytes_rd; i++)
 	{
