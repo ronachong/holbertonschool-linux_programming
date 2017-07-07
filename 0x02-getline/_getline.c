@@ -67,7 +67,7 @@ size_t c_to_copy(char *r_addr, size_t bytes_rd)
 
 	if (bytes_rd == 0)
 		return (0);
-       
+
 	for (i = 0; i < bytes_rd; i++)
 	{
 		if (r_addr[i] == '\n')
@@ -100,7 +100,7 @@ size_t update_str(char **str_addr, char *r_addr, size_t strc, size_t i)
 	if (strc == 0)
 		str_size = READ_SIZE;
 
- 	new_strc = strc + i;
+	new_strc = strc + i;
 
 	if (new_strc > str_size)
 		str_size = expand_str(str_addr, str_size, new_strc);
