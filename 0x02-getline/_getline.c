@@ -17,8 +17,6 @@ char *_getline(const int fd)
 	char *str;
 	char *ret;
 
-	str = malloc(READ_SIZE);
-
 	if (fd == -1)
 	{
 		r_addr = NULL;
@@ -26,6 +24,8 @@ char *_getline(const int fd)
 		bytes_rd = 0;
 		return (NULL);
 	}
+
+	str = malloc(READ_SIZE);
 
 	do {
 		if (r_addr == NULL)
