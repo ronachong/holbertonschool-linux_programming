@@ -27,13 +27,15 @@ def main():
     heap_start, heap_end = get_heap(pid)
 
 
-    with open("/proc/{pid}/mem".format(pid=pid), 'r') as mem:
+    with open("/proc/{pid}/mem".format(pid=pid), 'r+b') as mem:
         mem.seek(heap_start)
         heap = mem.read(heap_end - heap_start)
         i = heap.find(search)
         if i == -1:
             sys.exit("ERROR: '{search}' not found in heap."
                      .format(search=search))
-        print heap[i:i+len(search)]
+    
+        mem.seek(heap_start + i)
+        mem.write(replace)
 
 main()
