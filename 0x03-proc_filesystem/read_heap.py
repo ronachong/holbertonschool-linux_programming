@@ -10,7 +10,7 @@ def get_heap(pid):
                 mapping = maps.readline()
                 if not mapping:
                     # EOF presumably reached
-                    sys.exit("Could not identify heap in /proc/{pid}/maps."
+                    sys.exit("ERROR: Could not identify heap in /proc/{pid}/maps."
                              .format(pid=pid))
 
                 if mapping[-8:] == ' [heap]\n':
@@ -26,9 +26,14 @@ def main():
 
     heap_start, heap_end = get_heap(pid)
 
+
     with open("/proc/{pid}/mem".format(pid=pid), 'r') as mem:
         mem.seek(heap_start)
         heap = mem.read(heap_end - heap_start)
-        print heap
+        i = heap.find(search)
+        if i == -1:
+            sys.exit("ERROR: '{search}' not found in heap."
+                     .format(search=search))
+        print heap[i:i+len(search)]
 
 main()
