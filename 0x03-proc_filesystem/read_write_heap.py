@@ -21,6 +21,7 @@ def get_heap(pid):
                     return (heap_start, heap_end)
 
 def main():
+    """Replace a string in heap of given process."""
     pid = sys.argv[1]
     search = sys.argv[2]
     replace = sys.argv[3]
@@ -36,7 +37,7 @@ def main():
         if i == -1:
             sys.exit("ERROR: '{search}' not found in heap."
                      .format(search=search))
-    
+
         mem.seek(heap_start + i)
         mem.write(replace.encode("ISO-8859-1"))
 
