@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import struct
 
 def get_heap(pid):
     """Identify the start and end addresses for the heap of a process."""
@@ -29,13 +30,14 @@ def main():
 
     with open("/proc/{pid}/mem".format(pid=pid), 'r+b') as mem:
         mem.seek(heap_start)
-        heap = mem.read(heap_end - heap_start)
+        # heap = mem.read(heap_end - heap_start).decode("utf-")
+        heap = mem.read(heap_end - heap_start).decode("ISO-8859-1")
         i = heap.find(search)
         if i == -1:
             sys.exit("ERROR: '{search}' not found in heap."
                      .format(search=search))
     
         mem.seek(heap_start + i)
-        mem.write(replace)
+        mem.write(replace.encode("ISO-8859-1"))
 
 main()
