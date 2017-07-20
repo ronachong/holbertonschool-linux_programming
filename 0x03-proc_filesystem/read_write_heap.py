@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-import struct
 
 def get_heap(pid):
     """Identify the start and end addresses for the heap of a process."""
