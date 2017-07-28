@@ -7,7 +7,7 @@
  */
 int handle_signal(void)
 {
-	if (signal(2, signal_handler) == SIG_ERR)
+	if (signal(SIGINT, signal_handler) == SIG_ERR)
 		return (-1);
 	return (0);
 }
